@@ -1,0 +1,22 @@
+{
+    "name": "mrdebug/crudgen",
+    "description": "Create a Laravel Crud in a few seconds",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Escarem",
+            "email": "contact@escarem-jonathan.fr"
+        }
+    ],
+    "require": 
+    	{
+    		"php": ">=5.5.9"
+    	},
+    "autoload": 
+    {
+        "psr-4": 
+        {
+            "Mrdebug\\Crudgen\\": "src/"
+        }
+    }
+}

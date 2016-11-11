@@ -1,0 +1,34 @@
+@extends('default')
+
+@section('content')
+
+	<div class="pull-right"><a href="{{ route('DummyVariable.create') }}" class="btn btn-info">Creer</a></div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>id</th>
+DummyHeaderTable
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(DummyCreateVariable$ as DummyCreateVariableSing$)
+
+				<tr>
+					<td>{{ DummyCreateVariableSing$->id }}</td>
+DummyIndexTable
+					<td>
+						<a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Voir</a>
+						<a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Editer</a>
+						{!! Form::open(['method' => 'DELETE','route' => ['DummyVariable.destroy', DummyCreateVariableSing$->id]]) !!}
+			            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger']) !!}
+			        {!! Form::close() !!}
+					</td>
+				</tr>
+
+			@endforeach
+		</tbody>
+	</table>
+
+@stop

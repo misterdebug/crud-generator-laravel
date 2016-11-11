@@ -1,0 +1,7 @@
+@extends('default')
+
+@section('content')
+
+	{{ DummyCreateVariableSing$->id }}
+
+@stop
