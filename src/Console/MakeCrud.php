@@ -257,19 +257,7 @@ class MakeCrud extends Command
             if($type=="Cancel")
                 $this->call('make:model', ['name' => $singular_name]);
             else
-            {
-                $name_other_model = $this->ask('What is the name of the other model?');
-                if($this->confirm('Do you confirm the creation of this relationship? "$this->'.$type.'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($name_other_model)).'\')"'))
-                {
-                    
-
-                    $infos[]= ['name'=>$name_other_model, 'type'=>$type];                    
-
-                    $this->createRelationships($infos, $singular_name);
-                }
-
-            }
-
+                $this->setOtherNameModelRelationship($type, $singular_name);
         }
         else
         {
@@ -309,6 +297,18 @@ class MakeCrud extends Command
 
             
         }
+    }
+
+    private function setOtherNameModelRelationship($type, $singular_name)
+    {
+        $name_other_model = $this->ask('What is the name of the other model?');
+        if($this->confirm('Do you confirm the creation of this relationship? "$this->'.$type.'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($name_other_model)).'\')"'))
+        {
+            $infos[]= ['name'=>$name_other_model, 'type'=>$type];
+            $this->createRelationships($infos, $singular_name);
+        }
+        else
+            $this->setOtherNameModelRelationship($type, $singular_name);
     }
 
     private function getStubPath()
