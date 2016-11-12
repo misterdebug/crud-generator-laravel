@@ -34,6 +34,11 @@ and add it to app.php config file :
 ]
 ```
 
+4\. Publish config file and default-theme directory for views
+
+``` php artisan vendor:publish ```
+
+
 ## Usage
 
 ### Creating Crud
@@ -71,7 +76,15 @@ A request file is created in your **app\Http\Requests** directory. By default, a
 
 ### Views
 
-A views directory is created in your **resources/views** directory. All views extends a template called "default". And the content is in a section called "content".
+A views directory is created in your **resources/views** directory. By default, all views extends a template called "default". And the content is in a section called "content".
+You can change it in the config file: config/crudgen.php. 2 config options are available:
+
+##### views_style_directory
+Is the directory name in resources/crudgen/views, you want to use. A "default-theme" directory is added when you publish vendor assets. 
+You can duplicate/remove it and add multiple themes according your needs.
+
+##### separate_style_according_to_actions
+Each 4 views (index, create, edit, show) can have different @extends and @section options
 
 ## Remove a CRUD
 
