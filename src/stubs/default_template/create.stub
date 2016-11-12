@@ -1,6 +1,6 @@
-@extends('default')
+@extends('DummyExtends')
 
-@section('content')
+@section('DummySection')
 
 	@if($errors->has())
 		<div class="alert alert-danger">

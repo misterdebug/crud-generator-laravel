@@ -13,7 +13,7 @@ class CrudgenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([__DIR__.'/../config/crudgen.php' => config_path('crudgen.php')]);
     }
 
     /**
@@ -23,8 +23,11 @@ class CrudgenServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/crudgen.php', 'crudgen');
+
         $this->commands(
             'Mrdebug\Crudgen\Console\MakeCrud',
+            'Mrdebug\Crudgen\Console\MakeViews',
             'Mrdebug\Crudgen\Console\RemoveCrud'
         );
     }

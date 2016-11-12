@@ -1,6 +1,6 @@
-@extends('default')
+@extends('DummyExtends')
 
-@section('content')
+@section('DummySection')
 
 	<div class="pull-right"><a href="{{ route('DummyVariable.create') }}" class="btn btn-info">Creer</a></div>
 
