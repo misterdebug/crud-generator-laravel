@@ -13,7 +13,11 @@ class CrudgenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //publish config file
         $this->publishes([__DIR__.'/../config/crudgen.php' => config_path('crudgen.php')]);
+        
+        //and default-theme
+        $this->publishes([__DIR__.'/stubs/default-theme/' => resource_path('crudgen/views/default-theme/')]);
     }
 
     /**

@@ -43,6 +43,28 @@ class MakeViews extends Command
         $template_views_directory=config('crudgen.views_style_directory');
         $separate_style_according_to_actions=config('crudgen.separate_style_according_to_actions');
 
+        if(!File::isDirectory(resource_path('crudgen'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$template_views_directory)))
+        {
+            if($template_views_directory=='default-theme')
+                $this->error("Publish the default theme with: php artisan vendor:publish or create your own default-theme directory here: ".resource_path('crudgen'.DIRECTORY_SEPARATOR.'views'));
+            else
+                $this->error("Do you have created a directory called ".$template_views_directory." here: ".resource_path('crudgen'.DIRECTORY_SEPARATOR.'views').'?');
+            return;
+        }
+        else
+        {
+            $stubs=['index', 'create', 'edit', 'show'];
+            // check if all files exist
+            foreach ($stubs as $key => $stub) 
+            {
+                if (!File::exists($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.$stub.'.stub'))
+                {
+                    $this->error('Please create this file: '.$this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.$stub.'.stub');
+                    return;
+                } 
+            }     
+        }
+
         // we create our variables to respect the naming conventions
         $directory_name = ucfirst($this->argument('directory'));
         $singular_low_name=str_singular(strtolower($directory_name));
@@ -90,9 +112,9 @@ class MakeViews extends Command
 
 
         // if the directory doesn't exist we create it
-        if (!File::isDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
+        if (!File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
         {
-            File::makeDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name, 0755, true);
+            File::makeDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name, 0755, true);
             $this->line("<info>Created views directory:</info> $plural_low_name");
             
         }
@@ -102,7 +124,7 @@ class MakeViews extends Command
 
         /* ************************** index view *************************** */
 
-        $index_stub= File::get($this->getStubPath($template_views_directory).'/index.stub');
+        $index_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'index.stub');
         $index_stub = str_replace('DummyCreateVariable$', '$'.$plural_low_name, $index_stub);
         $index_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $index_stub);
         $index_stub = str_replace('DummyHeaderTable', $th_index, $index_stub);
@@ -114,9 +136,9 @@ class MakeViews extends Command
 
 
         // if the index.blade.php file doesn't exist, we create it
-        if(!File::exists($this->getRealpathBase('resources/views/'.$plural_low_name).'/index.blade.php'))
+        if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'index.blade.php'))
         {
-            File::put($this->getRealpathBase('resources/views/'.$plural_low_name).'/index.blade.php', $index_stub);
+            File::put($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'index.blade.php', $index_stub);
             $this->line("<info>Created View:</info> index.blade.php");
         }
         else
@@ -125,16 +147,16 @@ class MakeViews extends Command
 
         /* ************************** create view *************************** */
 
-        $create_stub= File::get($this->getStubPath($template_views_directory).'/create.stub');
+        $create_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'create.stub');
         $create_stub = str_replace('DummyVariable', $plural_low_name, $create_stub);
         $create_stub = str_replace('DummyFormCreate', $form_create, $create_stub);
         $create_stub = str_replace('DummyExtends', $separate_style_according_to_actions['create']['extends'], $create_stub);
         $create_stub = str_replace('DummySection', $separate_style_according_to_actions['create']['section'], $create_stub);
 
         // if the create.blade.php file doesn't exist, we create it
-        if(!File::exists($this->getRealpathBase('resources/views/'.$plural_low_name).'/create.blade.php'))
+        if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'create.blade.php'))
         {
-            File::put($this->getRealpathBase('resources/views/'.$plural_low_name).'/create.blade.php', $create_stub);
+            File::put($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'create.blade.php', $create_stub);
             $this->line("<info>Created View:</info> create.blade.php");
         }
         else
@@ -142,15 +164,15 @@ class MakeViews extends Command
 
         /* ************************** show view *************************** */
 
-        $show_stub= File::get($this->getStubPath($template_views_directory).'/show.stub');
+        $show_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'show.stub');
         $show_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $show_stub);
         $show_stub = str_replace('DummyExtends', $separate_style_according_to_actions['show']['extends'], $show_stub);
         $show_stub = str_replace('DummySection', $separate_style_according_to_actions['show']['section'], $show_stub);
         
         // if the show.blade.php file doesn't exist, we create it
-        if(!File::exists($this->getRealpathBase('resources/views/'.$plural_low_name).'/show.blade.php'))
+        if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'show.blade.php'))
         {
-            File::put($this->getRealpathBase('resources/views/'.$plural_low_name).'/show.blade.php', $show_stub);
+            File::put($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'show.blade.php', $show_stub);
             $this->line("<info>Created View:</info> show.blade.php");
         }
         else
@@ -158,7 +180,7 @@ class MakeViews extends Command
 
         /* ************************** edit view *************************** */
 
-        $edit_stub= File::get($this->getStubPath($template_views_directory).'/edit.stub');
+        $edit_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'edit.stub');
         $edit_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $edit_stub);
         $edit_stub = str_replace('DummyVariable', $plural_low_name, $edit_stub);
         $edit_stub = str_replace('DummyFormCreate', $form_create, $edit_stub);
@@ -166,9 +188,9 @@ class MakeViews extends Command
         $edit_stub = str_replace('DummySection', $separate_style_according_to_actions['edit']['section'], $edit_stub);
         
         // if the edit.blade.php file doesn't exist, we create it
-        if(!File::exists($this->getRealpathBase('resources/views/'.$plural_low_name).'/edit.blade.php'))
+        if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'edit.blade.php'))
         {
-            File::put($this->getRealpathBase('resources/views/'.$plural_low_name).'/edit.blade.php', $edit_stub);
+            File::put($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'edit.blade.php', $edit_stub);
             $this->line("<info>Created View:</info> edit.blade.php");
         }
         else
@@ -180,7 +202,7 @@ class MakeViews extends Command
     private function getStubPath($template_views_directory)
     {
 
-        return __DIR__.'/../stubs/'.$template_views_directory;
+        return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$template_views_directory);
     }
 
     protected function getRealpathBase($directory)

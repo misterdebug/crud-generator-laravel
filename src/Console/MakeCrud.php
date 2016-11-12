@@ -20,7 +20,7 @@ class MakeCrud extends Command
      *
      * @var string
      */
-    protected $description = 'Crud gen';
+    protected $description = 'Make a CRUD';
 
     /**
      * Create a new command instance.
@@ -39,9 +39,6 @@ class MakeCrud extends Command
      */
     public function handle()
     {
-        
-        $template_views_directory=config('crudgen.views_style_directory');
-        $separate_style_according_to_actions=config('crudgen.separate_style_according_to_actions');
 
         // we create our variables to respect the naming conventions
         $crud_name = ucfirst($this->argument('crud_name'));
@@ -56,7 +53,7 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $controller_stub= File::get($this->getStubPath().'/Controller.stub');
+        $controller_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Controller.stub');
         $controller_stub = str_replace('DummyClass', $plural_name.'Controller', $controller_stub);
         $controller_stub = str_replace('DummyModel', $singular_name, $controller_stub);
         $controller_stub = str_replace('DummyVariableSing', $singular_low_name, $controller_stub);
@@ -97,9 +94,9 @@ class MakeCrud extends Command
         $controller_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $controller_stub);
 
         // if our controller doesn't exists we create it 
-        if(!File::exists($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
+        if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
         {
-            File::put($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php', $controller_stub);
+            File::put($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php', $controller_stub);
             $this->line("<info>Created Controller:</info> $plural_name");
             
         }
@@ -129,16 +126,16 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $request_stub= File::get($this->getStubPath().'/Request.stub');
+        $request_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub');
         $request_stub = str_replace('DummyNamespace', $this->getDefaultNamespaceRequest($this->laravel->getNamespace()), $request_stub);
         $request_stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $request_stub);    
         $request_stub = str_replace('DummyRulesRequest', $rules, $request_stub);
         $request_stub = str_replace('DummyClass', $singular_name.'Request', $request_stub);
         
         // if the Request file doesn't exist, we create it
-        if(!File::exists($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
+        if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
         {
-            File::put($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php', $request_stub);
+            File::put($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php', $request_stub);
             $this->line("<info>Created Request:</info> $singular_name");
         }
         else
@@ -161,14 +158,14 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $migration_stub= File::get($this->getStubPath().'/migration.stub');
+        $migration_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
         $table=str_plural(snake_case($crud_name));
         $migration_stub= str_replace('DummyTable', $table, $migration_stub);
         $migration_stub= str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
         $migration_stub= str_replace('DummyFields', $fields_migration, $migration_stub);
         $date = date('Y_m_d_His');
         
-        File::put(database_path('/migrations/') . $date . '_create_' . $table . '_table.php', $migration_stub);
+        File::put(database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR) . $date . '_create_' . $table . '_table.php', $migration_stub);
 
         $this->line("<info>Created Migration:</info> $date"."_create_".$table."_table.php");
     }
@@ -207,15 +204,15 @@ class MakeCrud extends Command
                     $all_relations .= str_repeat("\t", 1).'}'."\n\n";
                 }
 
-                $model_stub= File::get($this->getStubPath().'/model.stub');
+                $model_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'model.stub');
                 $model_stub = str_replace('DummyNamespace', trim($this->laravel->getNamespace(), '\\'), $model_stub);
                 $model_stub = str_replace('DummyClass', $singular_name, $model_stub);
                 $model_stub = str_replace('DummyRelations', $all_relations, $model_stub);
 
-                if(!File::exists($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
+                if(!File::exists($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php'))
                 {
 
-                    File::put($this->getRealpathBase('app/').'/'.$singular_name.'.php', $model_stub);
+                    File::put($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php', $model_stub);
                     $this->line("<info>Created Model:</info> $singular_name");
                 }
                 else
@@ -242,17 +239,17 @@ class MakeCrud extends Command
     private function getStubPath()
     {
 
-        return __DIR__.'/../stubs';
+        return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'stubs';
     }
 
     protected function getDefaultNamespaceController($rootNamespace)
     {
-        return $rootNamespace.'Http\Controllers';
+        return $rootNamespace.'Http'.DIRECTORY_SEPARATOR.'Controllers';
     }
 
     protected function getDefaultNamespaceRequest($rootNamespace)
     {
-        return $rootNamespace.'Http\Requests';
+        return $rootNamespace.'Http'.DIRECTORY_SEPARATOR.'Requests';
     }
 
     protected function getRealpathBase($directory)

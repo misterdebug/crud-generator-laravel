@@ -2,7 +2,7 @@
 
 return
 [
-	'views_style_directory'=> 'default_template',
+	'views_style_directory'=> 'default-theme',
 	'separate_style_according_to_actions'=>
 											[
 												'index'=> 
