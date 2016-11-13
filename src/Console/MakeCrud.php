@@ -158,16 +158,7 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $migration_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
-        $table=str_plural(snake_case($crud_name));
-        $migration_stub= str_replace('DummyTable', $table, $migration_stub);
-        $migration_stub= str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
-        $migration_stub= str_replace('DummyFields', $fields_migration, $migration_stub);
-        $date = date('Y_m_d_His');
-        
-        File::put(database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR) . $date . '_create_' . $table . '_table.php', $migration_stub);
-
-        $this->line("<info>Created Migration:</info> $date"."_create_".$table."_table.php");
+        $this->makeMigration($crud_name, $fields_migration);
     }
 
     private function createRelationships($infos, $singular_name)
@@ -176,24 +167,30 @@ class MakeCrud extends Command
         {
             $type = $this->choice(
                 'Which type?', 
-                ['belongsTo', 'hasOne', 'hasMany', 'Cancel']
+                ['belongsTo', 'hasOne', 'hasMany', 'belongsToMany', 'Cancel']
             );
 
+            //cancel choice is selected, we make a basic model
             if($type=="Cancel")
                 $this->call('make:model', ['name' => $singular_name]);
+            //we want a name for this model
             else
-                $this->setOtherNameModelRelationship($type, $singular_name);
+                $this->setNameModelRelationship($type, $singular_name);
         }
+        //we don't confirm, 2 cases
         else
         {
+            //$infos is empty we didn't really create a relationship
             if(empty($infos))
                 $this->call('make:model', ['name' => $singular_name]);
+
+            //we get all relationships asked and we'll add in our model
             else
             {
                 $all_relations='';
                 foreach ($infos as $key => $info) 
                 {
-                    if($info['type']=="hasMany")
+                    if($info['type']=="hasMany" || $info['type']=="belongsToMany")
                         $name_function=str_plural(strtolower($info['name']));
                     else
                         $name_function=str_singular(strtolower($info['name']));
@@ -202,6 +199,22 @@ class MakeCrud extends Command
                     $all_relations .= str_repeat("\t", 1).'{'."\n";
                     $all_relations .=str_repeat("\t", 3).'return $this->'.$info['type'].'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($info['name'])).'\');'."\n";
                     $all_relations .= str_repeat("\t", 1).'}'."\n\n";
+
+                    // in belongsToMany case, we need to create an other table
+                    if($info['type']=="belongsToMany")
+                    {
+                        $current=strtolower($singular_name);
+                        $other=str_singular(strtolower($info['name']));
+                        $array_models=[$current, $other];
+                        sort($array_models);
+                        $name_table=implode('_', $array_models);
+
+                        //we make field with the name of the 2 tables and _id
+                        $fields= str_repeat("\t", 3).'$table'."->integer('".trim($current)."_id');\n";
+                        $fields .= str_repeat("\t", 3).'$table'."->integer('".trim($other)."_id');\n";
+
+                        $this->makeMigration($name_table, $fields);
+                    }
                 }
 
                 $model_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'model.stub');
@@ -217,23 +230,37 @@ class MakeCrud extends Command
                 }
                 else
                     $this->error('Model ' .$singular_name. ' already exists');
-                
             }
-
             
         }
     }
 
-    private function setOtherNameModelRelationship($type, $singular_name)
+    private function makeMigration($crud_name, $fields_migration)
+    {
+        $migration_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
+        $table=str_plural(snake_case($crud_name));
+        $migration_stub= str_replace('DummyTable', $table, $migration_stub);
+        $migration_stub= str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
+        $migration_stub= str_replace('DummyFields', $fields_migration, $migration_stub);
+        $date = date('Y_m_d_His');
+        
+        File::put(database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR) . $date . '_create_' . $table . '_table.php', $migration_stub);
+
+        $this->line("<info>Created Migration:</info> $date"."_create_".$table."_table.php");
+    }
+
+    private function setNameModelRelationship($type, $singular_name)
     {
         $name_other_model = $this->ask('What is the name of the other model?');
+
+        //we stock all relationships in $infos
         if($this->confirm('Do you confirm the creation of this relationship? "$this->'.$type.'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($name_other_model)).'\')"'))
         {
             $infos[]= ['name'=>$name_other_model, 'type'=>$type];
             $this->createRelationships($infos, $singular_name);
         }
         else
-            $this->setOtherNameModelRelationship($type, $singular_name);
+            $this->setNameModelRelationship($type, $singular_name);
     }
 
     private function getStubPath()
