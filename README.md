@@ -86,6 +86,9 @@ You can duplicate/remove it and add multiple themes according your needs.
 ##### separate_style_according_to_actions
 Each 4 views (index, create, edit, show) can have different @extends and @section options
 
+You can create views independently of the CRUD generator with :
+``` php artisan make:views nameOfYourDirectoryViews "column1:type, column2" ```
+
 ## Remove a CRUD
 
 You can delete all files created by the make:crud command at any time (you don't need to remove all files by hand)
