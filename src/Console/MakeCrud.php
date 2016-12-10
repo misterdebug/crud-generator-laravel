@@ -203,7 +203,7 @@ class MakeCrud extends Command
                     // in belongsToMany case, we need to create an other table
                     if($info['type']=="belongsToMany")
                     {
-                        $current=strtolower($singular_name);
+                        $current=str_singular(strtolower($singular_name));
                         $other=str_singular(strtolower($info['name']));
                         $array_models=[$current, $other];
                         sort($array_models);
