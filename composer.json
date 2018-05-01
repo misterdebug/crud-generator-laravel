@@ -18,5 +18,15 @@
         {
             "Mrdebug\\Crudgen\\": "src/"
         }
+    },
+    "extra": 
+    {
+        "laravel": 
+        {
+            "providers": 
+            [
+                "Mrdebug\\Crudgen\\CrudgenServiceProvider"
+            ]
+        }
     }
 }
