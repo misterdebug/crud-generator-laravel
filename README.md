@@ -1,12 +1,18 @@
-# CrudGen Laravel
+# CrudGen Laravel (Laravel 5.2 and above)
 
 CrudGen Laravel is a package that you can integrate in your Laravel to create a REAL CRUD (controller filled, views, model with relationships, request file with rules and the migration file).
 
 ## Install
 
+CrudGen Laravel uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
+
 Run composer command:
 
 ``` composer require mrdebug/crudgen ```
+
+## Laravel 5.5+
+
+If you don't use auto-discovery :
 
 2\. Add service provider to app.php config file.
 ```php 
