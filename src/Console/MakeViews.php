@@ -39,7 +39,6 @@ class MakeViews extends Command
      */
     public function handle()
     {
-        
         $template_views_directory=config('crudgen.views_style_directory');
         $separate_style_according_to_actions=config('crudgen.separate_style_according_to_actions');
 

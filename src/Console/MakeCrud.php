@@ -123,6 +123,9 @@ class MakeCrud extends Command
         $request_stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $request_stub);    
         $request_stub = str_replace('DummyRulesRequest', $rules, $request_stub);
         $request_stub = str_replace('DummyClass', $singular_name.'Request', $request_stub);
+
+        if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests'))
+            File::makeDirectory($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests');
         
         // if the Request file doesn't exist, we create it
         if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
@@ -139,9 +142,11 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        // we create our model
+        if(!File::exists($this->getRealpathBase('app').DIRECTORY_SEPARATOR.'Models'))
+            File::makeDirectory($this->getRealpathBase('app').DIRECTORY_SEPARATOR.'Models');
 
-            $this->createRelationships([], $singular_name);
+        // we create our model
+        $this->createRelationships([], $singular_name);
 
 
         /* ************************************************************************* 
@@ -164,7 +169,7 @@ class MakeCrud extends Command
 
             //cancel choice is selected, we make a basic model
             if($type=="Cancel")
-                $this->call('make:model', ['name' => $singular_name]);
+                $this->call('make:model', ['name' => $this->laravel->getNamespace().'Models\\'.$singular_name]);
             //we want a name for this model
             else
                 $this->setNameModelRelationship($type, $singular_name);
@@ -174,7 +179,7 @@ class MakeCrud extends Command
         {
             //$infos is empty we didn't really create a relationship
             if(empty($infos))
-                $this->call('make:model', ['name' => $singular_name]);
+                $this->call('make:model', ['name' => $this->laravel->getNamespace().'Models\\'.$singular_name]);
 
             //we get all relationships asked and we'll add in our model
             else
@@ -214,9 +219,9 @@ class MakeCrud extends Command
                 $model_stub = str_replace('DummyClass', $singular_name, $model_stub);
                 $model_stub = str_replace('DummyRelations', $all_relations, $model_stub);
 
-                if(!File::exists($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php'))
+                if(!File::exists($this->getRealpathBase('app').DIRECTORY_SEPARATOR.'Models'.DIRECTORY_SEPARATOR.$singular_name.'.php'))
                 {
-                    File::put($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php', $model_stub);
+                    File::put($this->getRealpathBase('app').DIRECTORY_SEPARATOR.'Models'.DIRECTORY_SEPARATOR.$singular_name.'.php', $model_stub);
                     $this->line("<info>Created Model:</info> $singular_name");
                 }
                 else

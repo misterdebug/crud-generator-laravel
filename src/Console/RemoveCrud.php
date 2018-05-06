@@ -48,65 +48,65 @@ class RemoveCrud extends Command
         // if --force option is used, we delete all files without checks
         if($this->option('force'))
         {
-            if(File::exists($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
             {
-                if(File::delete($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
+                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
                     $this->line("<info>Controller deleted</info>"); 
             }
 
-            if(File::isDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
+            if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
             {
-                if(File::deleteDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
+                if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
                     $this->line("<info>Views deleted</info>"); 
             }
 
-            if(File::exists($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
             {
-                if(File::delete($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
+                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
                     $this->line("<info>Request deleted</info>");
             }
 
-            if(File::exists($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
             {
-                if(File::delete($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
+                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
                     $this->line("<info>Model deleted</info>");
             }
         }
         // else we ask before deleting
         else
         {
-            if(File::exists($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
             {
-                if ($this->confirm('Do you want to delete this controller '.$this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php ?'))
+                if ($this->confirm('Do you want to delete this controller '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php ?'))
                 {
-                    if(File::delete($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
+                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
                         $this->line("<info>Controller deleted</info>");
                 } 
             }
 
-            if(File::isDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
+            if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
             {
-                if ($this->confirm('Do you want delete all files in this views directory '.$this->getRealpathBase('resources/views').'/'.$plural_low_name.' ? '."\n".implode(", \n",File::files($this->getRealpathBase('resources/views').'/'.$plural_low_name))))
+                if ($this->confirm('Do you want delete all files in this views directory '.$this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name.' ? '."\n".implode(", \n",File::files($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))))
                 {
-                    if(File::deleteDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
+                    if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
                         $this->line("<info>Views deleted</info>");
                 } 
             }
 
-            if(File::exists($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
             {
-                if ($this->confirm('Do you want to delete this request '.$this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php ?'))
+                if ($this->confirm('Do you want to delete this request '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php ?'))
                 {
-                    if(File::delete($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
+                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
                         $this->line("<info>Request deleted</info>");
                 } 
             }
 
-            if(File::exists($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
+            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
             {
-                if ($this->confirm('Do you want to delete this model '.$this->getRealpathBase('app/').'/'.$singular_name.'.php ?'))
+                if ($this->confirm('Do you want to delete this model '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php ?'))
                 {
-                    if(File::delete($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
+                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
                         $this->line("<info>Model deleted</info>");
                 } 
             }

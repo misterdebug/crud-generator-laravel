@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DummyRootNamespaceHttp\Requests;
 use DummyRootNamespaceHttp\Controllers\Controller;
 
-use DummyRootNamespaceDummyModel;
+use DummyRootNamespaceModels\DummyModel;
 use DummyRootNamespaceHttp\Requests\DummyModelRequest;
 
 class DummyClass extends Controller

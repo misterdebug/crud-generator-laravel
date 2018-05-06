@@ -1,6 +1,6 @@
 <?php
 
-namespace DummyNamespace;
+namespace DummyNamespace\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -2,7 +2,7 @@
 
 @section('DummySection')
 
-	@if($errors->has())
+	@if($errors->any())
 		<div class="alert alert-danger">
 			@foreach ($errors->all() as $error)
 				{{ $error }} <br>
@@ -13,7 +13,7 @@
 	{{ Form::model(DummyCreateVariableSing$, array('route' => array('DummyVariable.update', DummyCreateVariableSing$->id), 'method' => 'PUT')) }}
 
 DummyFormCreate
-		{{ Form::submit('Editer', array('class' => 'btn btn-primary')) }}
+		{{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
 @stop
