@@ -41,11 +41,11 @@ class MakeCrud extends Command
     {
 
         // we create our variables to respect the naming conventions
-        $crud_name = ucfirst($this->argument('crud_name'));
-        $plural_name=str_plural($crud_name);
-        $singular_name=str_singular($crud_name);
-        $singular_low_name=str_singular(strtolower($crud_name));
-        $plural_low_name=str_plural(strtolower($crud_name));
+        $crud_name         = ucfirst($this->argument('crud_name'));
+        $plural_name       = str_plural($crud_name);
+        $singular_name     = str_singular($crud_name);
+        $singular_low_name = str_singular(strtolower($crud_name));
+        $plural_low_name   = str_plural(strtolower($crud_name));
 
         /* ************************************************************************* 
 
@@ -53,7 +53,7 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $controller_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Controller.stub');
+        $controller_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Controller.stub');
         $controller_stub = str_replace('DummyClass', $plural_name.'Controller', $controller_stub);
         $controller_stub = str_replace('DummyModel', $singular_name, $controller_stub);
         $controller_stub = str_replace('DummyVariableSing', $singular_low_name, $controller_stub);
@@ -63,29 +63,21 @@ class MakeCrud extends Command
 
         $columns = $this->argument('columns');
         // if the columns argument is empty, we create an empty array else we explode on the comma
-        if($columns=='')
-            $columns=[];
-        else
-            $columns=explode(',', $columns);
+        $columns = ($columns=='') ? [] : explode(',', $columns);
 
         $cols=$rules=$fields_migration='';
 
         // we create our placeholders regarding columns
         foreach ($columns as $column) 
         {
-            $type=explode(':', trim($column));
-
-            if(count($type)==2)
-                $sql_type=$type[1];
-            else
-                $sql_type='string';
-
-            $column=$type[0];
+            $type     = explode(':', trim($column));
+            $sql_type = (count($type)==2) ? $type[1] : 'string';
+            $column   = $type[0];
 
             // our placeholders
-            $cols.=str_repeat("\t", 2).'DummyCreateVariableSing$->'.trim($column).'=$request->input(\''.trim($column).'\');'."\n";
-            $rules .=str_repeat("\t", 3)."'".trim($column)."'=>'"."required',\n";
-            $fields_migration .=str_repeat("\t", 3).'$table'."->$sql_type('".trim($column)."');\n";
+            $cols             .= str_repeat("\t", 2).'DummyCreateVariableSing$->'.trim($column).'=$request->input(\''.trim($column).'\');'."\n";
+            $rules            .= str_repeat("\t", 3)."'".trim($column)."'=>'"."required',\n";
+            $fields_migration .= str_repeat("\t", 3).'$table'."->$sql_type('".trim($column)."');\n";
         }
 
         // we replace our placeholders
@@ -126,7 +118,7 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $request_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub');
+        $request_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub');
         $request_stub = str_replace('DummyNamespace', $this->getDefaultNamespaceRequest($this->laravel->getNamespace()), $request_stub);
         $request_stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $request_stub);    
         $request_stub = str_replace('DummyRulesRequest', $rules, $request_stub);
@@ -195,36 +187,35 @@ class MakeCrud extends Command
                     else
                         $name_function=str_singular(strtolower($info['name']));
 
-                    $all_relations .=str_repeat("\t", 1).'public function '.$name_function.'()'."\n";
+                    $all_relations .= str_repeat("\t", 1).'public function '.$name_function.'()'."\n";
                     $all_relations .= str_repeat("\t", 1).'{'."\n";
-                    $all_relations .=str_repeat("\t", 3).'return $this->'.$info['type'].'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($info['name'])).'\');'."\n";
+                    $all_relations .= str_repeat("\t", 3).'return $this->'.$info['type'].'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($info['name'])).'\');'."\n";
                     $all_relations .= str_repeat("\t", 1).'}'."\n\n";
 
                     // in belongsToMany case, we need to create an other table
                     if($info['type']=="belongsToMany")
                     {
-                        $current=str_singular(strtolower($singular_name));
-                        $other=str_singular(strtolower($info['name']));
-                        $array_models=[$current, $other];
+                        $current      = str_singular(strtolower($singular_name));
+                        $other        = str_singular(strtolower($info['name']));
+                        $array_models = [$current, $other];
                         sort($array_models);
-                        $name_table=implode('_', $array_models);
+                        $name_table   = implode('_', $array_models);
 
                         //we make field with the name of the 2 tables and _id
-                        $fields= str_repeat("\t", 3).'$table'."->integer('".trim($current)."_id');\n";
+                        $fields  = str_repeat("\t", 3).'$table'."->integer('".trim($current)."_id');\n";
                         $fields .= str_repeat("\t", 3).'$table'."->integer('".trim($other)."_id');\n";
 
                         $this->makeMigration($name_table, $fields);
                     }
                 }
 
-                $model_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'model.stub');
+                $model_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'model.stub');
                 $model_stub = str_replace('DummyNamespace', trim($this->laravel->getNamespace(), '\\'), $model_stub);
                 $model_stub = str_replace('DummyClass', $singular_name, $model_stub);
                 $model_stub = str_replace('DummyRelations', $all_relations, $model_stub);
 
                 if(!File::exists($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php'))
                 {
-
                     File::put($this->getRealpathBase('app').DIRECTORY_SEPARATOR.$singular_name.'.php', $model_stub);
                     $this->line("<info>Created Model:</info> $singular_name");
                 }
@@ -237,12 +228,12 @@ class MakeCrud extends Command
 
     private function makeMigration($crud_name, $fields_migration)
     {
-        $migration_stub= File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
-        $table=str_plural(snake_case($crud_name));
-        $migration_stub= str_replace('DummyTable', $table, $migration_stub);
-        $migration_stub= str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
-        $migration_stub= str_replace('DummyFields', $fields_migration, $migration_stub);
-        $date = date('Y_m_d_His');
+        $migration_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
+        $table          = str_plural(snake_case($crud_name));
+        $migration_stub = str_replace('DummyTable', $table, $migration_stub);
+        $migration_stub = str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
+        $migration_stub = str_replace('DummyFields', $fields_migration, $migration_stub);
+        $date           = date('Y_m_d_His');
         
         File::put(database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR) . $date . '_create_' . $table . '_table.php', $migration_stub);
 

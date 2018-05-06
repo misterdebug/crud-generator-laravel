@@ -66,37 +66,28 @@ class MakeViews extends Command
         }
 
         // we create our variables to respect the naming conventions
-        $directory_name = ucfirst($this->argument('directory'));
-        $singular_low_name=str_singular(strtolower($directory_name));
-        $plural_low_name=str_plural(strtolower($directory_name));
+        $directory_name    = ucfirst($this->argument('directory'));
+        $singular_low_name = str_singular(strtolower($directory_name));
+        $plural_low_name   = str_plural(strtolower($directory_name));
 
 
         $columns = $this->argument('columns');
         // if the columns argument is empty, we create an empty array else we explode on the comma
-        if($columns=='')
-            $columns=[];
-        else
-            $columns=explode(',', $columns);
+        $columns = ($columns=='') ? [] : explode(',', $columns);
 
         $th_index=$index_view=$form_create='';
 
         // we create our placeholders regarding columns
         foreach ($columns as $column) 
         {
-            $type=explode(':', trim($column));
-
-            if(count($type)==2)
-                $sql_type=$type[1];
-            else
-                $sql_type='string';
-
-            $column=$type[0];
-
-            $type_html=$this->getHtmlType($sql_type);
+            $type      = explode(':', trim($column));
+            $sql_type  = (count($type)==2) ? $type[1] : 'string';
+            $column    = $type[0];
+            $type_html = $this->getHtmlType($sql_type);
 
             // our placeholders
-            $th_index .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
-            $index_view .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
+            $th_index    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
+            $index_view  .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
             $form_create .=str_repeat("\t", 2).'<div class="form-group">'."\n";
             $form_create .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\') }}'."\n";
             $form_create .=str_repeat("\t", 3).'{{ Form::'.$type_html.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
@@ -116,7 +107,6 @@ class MakeViews extends Command
         {
             File::makeDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name, 0755, true);
             $this->line("<info>Created views directory:</info> $plural_low_name");
-            
         }
         else
             $this->error('Views directory '.$plural_low_name.' already exists');
@@ -124,7 +114,7 @@ class MakeViews extends Command
 
         /* ************************** index view *************************** */
 
-        $index_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'index.stub');
+        $index_stub = File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'index.stub');
         $index_stub = str_replace('DummyCreateVariable$', '$'.$plural_low_name, $index_stub);
         $index_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $index_stub);
         $index_stub = str_replace('DummyHeaderTable', $th_index, $index_stub);
@@ -147,7 +137,7 @@ class MakeViews extends Command
 
         /* ************************** create view *************************** */
 
-        $create_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'create.stub');
+        $create_stub = File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'create.stub');
         $create_stub = str_replace('DummyVariable', $plural_low_name, $create_stub);
         $create_stub = str_replace('DummyFormCreate', $form_create, $create_stub);
         $create_stub = str_replace('DummyExtends', $separate_style_according_to_actions['create']['extends'], $create_stub);
@@ -164,7 +154,7 @@ class MakeViews extends Command
 
         /* ************************** show view *************************** */
 
-        $show_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'show.stub');
+        $show_stub = File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'show.stub');
         $show_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $show_stub);
         $show_stub = str_replace('DummyExtends', $separate_style_according_to_actions['show']['extends'], $show_stub);
         $show_stub = str_replace('DummySection', $separate_style_according_to_actions['show']['section'], $show_stub);
@@ -180,7 +170,7 @@ class MakeViews extends Command
 
         /* ************************** edit view *************************** */
 
-        $edit_stub= File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'edit.stub');
+        $edit_stub = File::get($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.'edit.stub');
         $edit_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $edit_stub);
         $edit_stub = str_replace('DummyVariable', $plural_low_name, $edit_stub);
         $edit_stub = str_replace('DummyFormCreate', $form_create, $edit_stub);
@@ -201,7 +191,6 @@ class MakeViews extends Command
 
     private function getStubPath($template_views_directory)
     {
-
         return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$template_views_directory);
     }
 
@@ -212,14 +201,13 @@ class MakeViews extends Command
 
     private function getHtmlType($sql_type)
     {
-        $conversion=[
-                        'string'=>'text',
-                        'text'=>'textarea',
-                        'integer'=>'text'
-
-                    ];
+        $conversion =
+        [
+            'string'  => 'text',
+            'text'    => 'textarea',
+            'integer' => 'text'
+        ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');
-
     }
 
 }

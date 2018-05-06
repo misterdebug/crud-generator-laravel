@@ -39,45 +39,37 @@ class RemoveCrud extends Command
     public function handle()
     {
         // we create our variables to respect the naming conventions
-        $crud_name = ucfirst($this->argument('crud_name'));
-        $plural_name=str_plural($crud_name);
-        $singular_name=str_singular($crud_name);
-        $singular_low_name=str_singular(strtolower($crud_name));
-        $plural_low_name=str_plural(strtolower($crud_name));
+        $crud_name         = ucfirst($this->argument('crud_name'));
+        $plural_name       = str_plural($crud_name);
+        $singular_name     = str_singular($crud_name);
+        $singular_low_name = str_singular(strtolower($crud_name));
+        $plural_low_name   = str_plural(strtolower($crud_name));
 
         // if --force option is used, we delete all files without checks
         if($this->option('force'))
         {
             if(File::exists($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
             {
-                
                 if(File::delete($this->getRealpathBase('app/Http/Controllers').'/'.$plural_name.'Controller.php'))
-                    $this->line("<info>Controller deleted</info>");
-                
+                    $this->line("<info>Controller deleted</info>"); 
             }
 
             if(File::isDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
             {
-                
                 if(File::deleteDirectory($this->getRealpathBase('resources/views').'/'.$plural_low_name))
-                    $this->line("<info>Views deleted</info>");
-                 
+                    $this->line("<info>Views deleted</info>"); 
             }
 
             if(File::exists($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
             {
-                
                 if(File::delete($this->getRealpathBase('app/Http/Requests').'/'.$singular_name.'Request.php'))
                     $this->line("<info>Request deleted</info>");
-            
             }
 
             if(File::exists($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
             {
-                
                 if(File::delete($this->getRealpathBase('app/').'/'.$singular_name.'.php'))
                     $this->line("<info>Model deleted</info>");
-            
             }
         }
         // else we ask before deleting
