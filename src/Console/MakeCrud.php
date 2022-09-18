@@ -5,6 +5,7 @@ namespace Mrdebug\Crudgen\Console;
 use Illuminate\Console\Command;
 
 use File;
+use Str;
 
 class MakeCrud extends Command
 {
@@ -42,12 +43,12 @@ class MakeCrud extends Command
 
         // we create our variables to respect the naming conventions
         $crud_name         = ucfirst($this->argument('crud_name'));
-        $plural_name       = str_plural($crud_name);
-        $singular_name     = str_singular($crud_name);
-        $singular_low_name = str_singular(strtolower($crud_name));
-        $plural_low_name   = str_plural(strtolower($crud_name));
+        $plural_name       = Str::plural($crud_name);
+        $singular_name     = Str::singular($crud_name);
+        $singular_low_name = Str::singular(strtolower($crud_name));
+        $plural_low_name   = Str::plural(strtolower($crud_name));
 
-        /* ************************************************************************* 
+        /* *************************************************************************
 
                                      CONTROLLER
 
@@ -68,7 +69,7 @@ class MakeCrud extends Command
         $cols=$rules=$fields_migration='';
 
         // we create our placeholders regarding columns
-        foreach ($columns as $column) 
+        foreach ($columns as $column)
         {
             $type     = explode(':', trim($column));
             $sql_type = (count($type)==2) ? $type[1] : 'string';
@@ -85,18 +86,18 @@ class MakeCrud extends Command
         $controller_stub = str_replace('DummyCreateVariable$', '$'.$plural_low_name, $controller_stub);
         $controller_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $controller_stub);
 
-        // if our controller doesn't exists we create it 
+        // if our controller doesn't exists we create it
         if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
         {
             File::put($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php', $controller_stub);
             $this->line("<info>Created Controller:</info> $plural_name");
-            
+
         }
         else
             $this->error('Controller '.$plural_name.' already exists');
 
 
-        /* ************************************************************************* 
+        /* *************************************************************************
 
                                         VIEWS
 
@@ -110,9 +111,9 @@ class MakeCrud extends Command
                 'columns'=> $this->argument('columns')
             ]
         );
-        
 
-        /* ************************************************************************* 
+
+        /* *************************************************************************
 
                                         REQUEST
 
@@ -120,13 +121,13 @@ class MakeCrud extends Command
 
         $request_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub');
         $request_stub = str_replace('DummyNamespace', $this->getDefaultNamespaceRequest($this->laravel->getNamespace()), $request_stub);
-        $request_stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $request_stub);    
+        $request_stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $request_stub);
         $request_stub = str_replace('DummyRulesRequest', $rules, $request_stub);
         $request_stub = str_replace('DummyClass', $singular_name.'Request', $request_stub);
 
         if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests'))
             File::makeDirectory($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests');
-        
+
         // if the Request file doesn't exist, we create it
         if(!File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
         {
@@ -136,7 +137,7 @@ class MakeCrud extends Command
         else
             $this->error('Request ' .$singular_name. ' already exists');
 
-        /* ************************************************************************* 
+        /* *************************************************************************
 
                                         MODEL
 
@@ -149,7 +150,7 @@ class MakeCrud extends Command
         $this->createRelationships([], $singular_name);
 
 
-        /* ************************************************************************* 
+        /* *************************************************************************
 
                                         MIGRATION
 
@@ -160,10 +161,10 @@ class MakeCrud extends Command
 
     private function createRelationships($infos, $singular_name)
     {
-        if ($this->confirm('Do you want to create relationships between this model and an other one?')) 
+        if ($this->confirm('Do you want to create relationships between this model and an other one?'))
         {
             $type = $this->choice(
-                'Which type?', 
+                'Which type?',
                 ['belongsTo', 'hasOne', 'hasMany', 'belongsToMany', 'Cancel']
             );
 
@@ -185,23 +186,23 @@ class MakeCrud extends Command
             else
             {
                 $all_relations='';
-                foreach ($infos as $key => $info) 
+                foreach ($infos as $key => $info)
                 {
                     if($info['type']=="hasMany" || $info['type']=="belongsToMany")
-                        $name_function=str_plural(strtolower($info['name']));
+                        $name_function=Str::plural(strtolower($info['name']));
                     else
-                        $name_function=str_singular(strtolower($info['name']));
+                        $name_function=Str::singular(strtolower($info['name']));
 
                     $all_relations .= str_repeat("\t", 1).'public function '.$name_function.'()'."\n";
                     $all_relations .= str_repeat("\t", 1).'{'."\n";
-                    $all_relations .= str_repeat("\t", 3).'return $this->'.$info['type'].'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($info['name'])).'\');'."\n";
+                    $all_relations .= str_repeat("\t", 3).'return $this->'.$info['type'].'(\''.$this->laravel->getNamespace().''.ucfirst(Str::singular($info['name'])).'\');'."\n";
                     $all_relations .= str_repeat("\t", 1).'}'."\n\n";
 
                     // in belongsToMany case, we need to create an other table
                     if($info['type']=="belongsToMany")
                     {
-                        $current      = str_singular(strtolower($singular_name));
-                        $other        = str_singular(strtolower($info['name']));
+                        $current      = Str::singular(strtolower($singular_name));
+                        $other        = Str::singular(strtolower($info['name']));
                         $array_models = [$current, $other];
                         sort($array_models);
                         $name_table   = implode('_', $array_models);
@@ -227,19 +228,19 @@ class MakeCrud extends Command
                 else
                     $this->error('Model ' .$singular_name. ' already exists');
             }
-            
+
         }
     }
 
     private function makeMigration($crud_name, $fields_migration)
     {
         $migration_stub = File::get($this->getStubPath().DIRECTORY_SEPARATOR.'migration.stub');
-        $table          = str_plural(snake_case($crud_name));
+        $table          = Str::plural(Str::snake($crud_name));
         $migration_stub = str_replace('DummyTable', $table, $migration_stub);
-        $migration_stub = str_replace('DummyClass', studly_case('create_' . $table . '_table'), $migration_stub);
+        $migration_stub = str_replace('DummyClass', Str::studly('create_' . $table . '_table'), $migration_stub);
         $migration_stub = str_replace('DummyFields', $fields_migration, $migration_stub);
         $date           = date('Y_m_d_His');
-        
+
         File::put(database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR) . $date . '_create_' . $table . '_table.php', $migration_stub);
 
         $this->line("<info>Created Migration:</info> $date"."_create_".$table."_table.php");
@@ -250,7 +251,7 @@ class MakeCrud extends Command
         $name_other_model = $this->ask('What is the name of the other model?');
 
         //we stock all relationships in $infos
-        if($this->confirm('Do you confirm the creation of this relationship? "$this->'.$type.'(\''.$this->laravel->getNamespace().''.ucfirst(str_singular($name_other_model)).'\')"'))
+        if($this->confirm('Do you confirm the creation of this relationship? "$this->'.$type.'(\''.$this->laravel->getNamespace().''.ucfirst(Str::singular($name_other_model)).'\')"'))
         {
             $infos[]= ['name'=>$name_other_model, 'type'=>$type];
             $this->createRelationships($infos, $singular_name);

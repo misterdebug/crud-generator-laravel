@@ -4,6 +4,7 @@ namespace Mrdebug\Crudgen\Console;
 
 use Illuminate\Console\Command;
 use File;
+use Str;
 
 class RemoveCrud extends Command
 {
@@ -40,10 +41,10 @@ class RemoveCrud extends Command
     {
         // we create our variables to respect the naming conventions
         $crud_name         = ucfirst($this->argument('crud_name'));
-        $plural_name       = str_plural($crud_name);
-        $singular_name     = str_singular($crud_name);
-        $singular_low_name = str_singular(strtolower($crud_name));
-        $plural_low_name   = str_plural(strtolower($crud_name));
+        $plural_name       = Str::plural($crud_name);
+        $singular_name     = Str::singular($crud_name);
+        $singular_low_name = Str::singular(strtolower($crud_name));
+        $plural_low_name   = Str::plural(strtolower($crud_name));
 
         // if --force option is used, we delete all files without checks
         if($this->option('force'))
@@ -51,13 +52,13 @@ class RemoveCrud extends Command
             if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
             {
                 if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
-                    $this->line("<info>Controller deleted</info>"); 
+                    $this->line("<info>Controller deleted</info>");
             }
 
             if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
             {
                 if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
-                    $this->line("<info>Views deleted</info>"); 
+                    $this->line("<info>Views deleted</info>");
             }
 
             if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
@@ -81,7 +82,7 @@ class RemoveCrud extends Command
                 {
                     if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
                         $this->line("<info>Controller deleted</info>");
-                } 
+                }
             }
 
             if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
@@ -90,7 +91,7 @@ class RemoveCrud extends Command
                 {
                     if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
                         $this->line("<info>Views deleted</info>");
-                } 
+                }
             }
 
             if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
@@ -99,7 +100,7 @@ class RemoveCrud extends Command
                 {
                     if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
                         $this->line("<info>Request deleted</info>");
-                } 
+                }
             }
 
             if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
@@ -108,7 +109,7 @@ class RemoveCrud extends Command
                 {
                     if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
                         $this->line("<info>Model deleted</info>");
-                } 
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ namespace Mrdebug\Crudgen\Console;
 use Illuminate\Console\Command;
 
 use File;
+use Str;
 
 class MakeViews extends Command
 {
@@ -54,20 +55,20 @@ class MakeViews extends Command
         {
             $stubs=['index', 'create', 'edit', 'show'];
             // check if all files exist
-            foreach ($stubs as $key => $stub) 
+            foreach ($stubs as $key => $stub)
             {
                 if (!File::exists($this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.$stub.'.stub'))
                 {
                     $this->error('Please create this file: '.$this->getStubPath($template_views_directory).DIRECTORY_SEPARATOR.$stub.'.stub');
                     return;
-                } 
-            }     
+                }
+            }
         }
 
         // we create our variables to respect the naming conventions
         $directory_name    = ucfirst($this->argument('directory'));
-        $singular_low_name = str_singular(strtolower($directory_name));
-        $plural_low_name   = str_plural(strtolower($directory_name));
+        $singular_low_name = Str::singular(strtolower($directory_name));
+        $plural_low_name   = Str::plural(strtolower($directory_name));
 
 
         $columns = $this->argument('columns');
@@ -77,7 +78,7 @@ class MakeViews extends Command
         $th_index=$index_view=$form_create='';
 
         // we create our placeholders regarding columns
-        foreach ($columns as $column) 
+        foreach ($columns as $column)
         {
             $type      = explode(':', trim($column));
             $sql_type  = (count($type)==2) ? $type[1] : 'string';
@@ -94,7 +95,7 @@ class MakeViews extends Command
         }
 
 
-        /* ************************************************************************* 
+        /* *************************************************************************
 
                                         VIEWS
 
@@ -157,7 +158,7 @@ class MakeViews extends Command
         $show_stub = str_replace('DummyCreateVariableSing$', '$'.$singular_low_name, $show_stub);
         $show_stub = str_replace('DummyExtends', $separate_style_according_to_actions['show']['extends'], $show_stub);
         $show_stub = str_replace('DummySection', $separate_style_according_to_actions['show']['section'], $show_stub);
-        
+
         // if the show.blade.php file doesn't exist, we create it
         if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'show.blade.php'))
         {
@@ -175,7 +176,7 @@ class MakeViews extends Command
         $edit_stub = str_replace('DummyFormCreate', $form_create, $edit_stub);
         $edit_stub = str_replace('DummyExtends', $separate_style_according_to_actions['edit']['extends'], $edit_stub);
         $edit_stub = str_replace('DummySection', $separate_style_according_to_actions['edit']['section'], $edit_stub);
-        
+
         // if the edit.blade.php file doesn't exist, we create it
         if(!File::exists($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$plural_low_name).DIRECTORY_SEPARATOR.'edit.blade.php'))
         {
@@ -183,7 +184,7 @@ class MakeViews extends Command
             $this->line("<info>Created View:</info> edit.blade.php");
         }
         else
-            $this->error('View edit.blade.php already exists');   
+            $this->error('View edit.blade.php already exists');
     }
 
 

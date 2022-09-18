@@ -2,9 +2,6 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Http\Request;
-
-use DummyRootNamespaceHttp\Requests;
 use DummyRootNamespaceHttp\Controllers\Controller;
 
 use DummyRootNamespaceModels\DummyModel;
@@ -36,13 +33,13 @@ class DummyClass extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Plop2Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(DummyModelRequest $request)
     {
         DummyCreateVariableSing$ = new DummyModel;
-DummyUpdate        
+DummyUpdate
         DummyCreateVariableSing$->save();
 
         return redirect()->route('DummyVariable.index');
@@ -69,20 +66,20 @@ DummyUpdate
     public function edit($id)
     {
         DummyCreateVariableSing$ = DummyModel::findOrFail($id);
-        return view('DummyVariable.edit',['DummyVariableSing'=>DummyCreateVariableSing$]);    
+        return view('DummyVariable.edit',['DummyVariableSing'=>DummyCreateVariableSing$]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Plop2Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(DummyModelRequest $request, $id)
     {
         DummyCreateVariableSing$ = DummyModel::findOrFail($id);
-DummyUpdate   
+DummyUpdate
         DummyCreateVariableSing$->save();
         return redirect()->route('DummyVariable.index');
     }

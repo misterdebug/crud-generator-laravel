@@ -10,37 +10,11 @@ Run composer command:
 
 ``` composer require mrdebug/crudgen ```
 
-## Laravel 5.5+
-
-If you don't use auto-discovery :
-
-2\. Add service provider to app.php config file.
-```php 
-'providers' => [
-    //... 
-    Mrdebug\Crudgen\CrudgenServiceProvider::class,
-]
-```
-
-3\. If you don't use Laravel Collective Form package in your project, install it:
+2\. If you don't use Laravel Collective Form package in your project, install it:
 
 ``` composer require laravelcollective/html ```
 
-and add it to app.php config file :
-```php
-'providers' => [
-    //... 
-    Collective\Html\HtmlServiceProvider::class,
-]
-
-'aliases' => [
-    //...
-    'Form' => Collective\Html\FormFacade::class,
-    'Html' => Collective\Html\HtmlFacade::class,
-]
-```
-
-4\. Publish config file and default-theme directory for views
+3\. Publish config file and default-theme directory for views
 
 ``` php artisan vendor:publish ```
 
