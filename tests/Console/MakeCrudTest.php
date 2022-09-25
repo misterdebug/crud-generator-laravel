@@ -31,7 +31,7 @@ class MakeCrudTest extends TestCase
         $arrayViewsCreated = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(4, $arrayViewsCreated);
         foreach ($arrayViewsCreated as $key => $viewCreated) {
-            $this->assertSame(File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/'.$viewCreated), File::get(resource_path('views/posts/'.$viewCreated)), $viewCreated);
+            $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/'.$viewCreated)), preg_replace('/\s+/', '', File::get(resource_path('views/posts/'.$viewCreated))), $viewCreated);
         }
 
         //controller

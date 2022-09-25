@@ -2,7 +2,7 @@
 
 @section('DummySection')
 
-	<div class="pull-right"><a href="{{ route('DummyVariable.create') }}" class="btn btn-info">Create</a></div>
+	<div class="d-flex justify-content-end mb-3"><a href="{{ route('DummyVariable.create') }}" class="btn btn-info">Create</a></div>
 
 	<table class="table table-bordered">
 		<thead>
@@ -19,11 +19,13 @@ DummyHeaderTable
 					<td>{{ DummyCreateVariableSing$->id }}</td>
 DummyIndexTable
 					<td>
-						<a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
-						<a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Edit</a>
-						{!! Form::open(['method' => 'DELETE','route' => ['DummyVariable.destroy', DummyCreateVariableSing$->id]]) !!}
-			            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-			        {!! Form::close() !!}
+						<div class="d-flex gap-2">
+                            <a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
+                            <a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Edit</a>
+                            {!! Form::open(['method' => 'DELETE','route' => ['DummyVariable.destroy', DummyCreateVariableSing$->id]]) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </div>
 					</td>
 				</tr>
 

@@ -13,15 +13,15 @@ class MakeGlobalService
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
     }
 
-    public function getNamingConvention($crud_name)
+    public function getNamingConvention($crudName)
     {
         return
         [
-            'plural_name'       => Str::plural($crud_name),
-            'singular_name'     => Str::singular($crud_name),
-            'singular_low_name' => Str::singular(strtolower($crud_name)),
-            'plural_low_name'   => Str::plural(strtolower($crud_name)),
-            'table_name'        => Str::plural(Str::snake($crud_name))
+            'plural_name'       => Str::plural($crudName),
+            'singular_name'     => Str::singular($crudName),
+            'singular_low_name' => Str::singular(strtolower($crudName)),
+            'plural_low_name'   => Str::plural(strtolower($crudName)),
+            'table_name'        => Str::plural(Str::snake($crudName))
         ];
     }
 

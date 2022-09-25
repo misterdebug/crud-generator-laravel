@@ -40,8 +40,8 @@ class MakeViews extends Command
      */
     public function handle()
     {
-        $template_views_directory=config('crudgen.views_style_directory');
-        $separate_style_according_to_actions=config('crudgen.separate_style_according_to_actions');
+        $template_views_directory = config('crudgen.views_style_directory');
+        $separate_style_according_to_actions = config('crudgen.separate_style_according_to_actions');
 
         if(!File::isDirectory(resource_path('crudgen'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$template_views_directory)))
         {
@@ -88,8 +88,8 @@ class MakeViews extends Command
             // our placeholders
             $th_index    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
             $index_view  .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
-            $form_create .=str_repeat("\t", 2).'<div class="form-group">'."\n";
-            $form_create .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\') }}'."\n";
+            $form_create .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
+            $form_create .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
             $form_create .=str_repeat("\t", 3).'{{ Form::'.$type_html.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
             $form_create .=str_repeat("\t", 2).'</div>'."\n";
         }

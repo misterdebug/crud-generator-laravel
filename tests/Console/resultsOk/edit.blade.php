@@ -12,12 +12,12 @@
 
 	{{ Form::model($post, array('route' => array('posts.update', $post->id), 'method' => 'PUT')) }}
 
-		<div class="form-group">
-			{{ Form::label('title', 'Title') }}
+		<div class="mb-3">
+			{{ Form::label('title', 'Title', ['class'=>'form-label']) }}
 			{{ Form::text('title', null, array('class' => 'form-control')) }}
 		</div>
-		<div class="form-group">
-			{{ Form::label('url', 'Url') }}
+		<div class="mb-3">
+			{{ Form::label('url', 'Url', ['class'=>'form-label']) }}
 			{{ Form::text('url', null, array('class' => 'form-control')) }}
 		</div>
 
