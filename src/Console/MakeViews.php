@@ -4,8 +4,8 @@ namespace Mrdebug\Crudgen\Console;
 
 use Illuminate\Console\Command;
 
-use File;
-use Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class MakeViews extends Command
 {

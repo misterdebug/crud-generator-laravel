@@ -1,12 +1,12 @@
-# CrudGen Laravel 9
+# Crud Generator Laravel 9
 
-CrudGen Laravel is a package that you can integrate in your Laravel to create a REAL CRUD (controller filled, views, model with relationships, request file with rules and the migration file).
+Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD (controller with all the code already written, views, model with relationships, request file with rules and the migration file).
 
 ## Installation
 
 1\. Run composer command:
 
-``` composer require --dev mrdebug/crudgen ```
+``` composer require mrdebug/crudgen --dev```
 
 2\. If you don't use Laravel Collective Form package in your project, install it:
 
@@ -71,7 +71,7 @@ You can create views independently of the CRUD generator with :
 
 You can delete all files created by the make:crud command at any time (you don't need to remove all files by hand)
 
-``` php artisan remove:crud nameOfYourCrud --force ```
+``` php artisan rm:crud nameOfYourCrud --force ```
 
 --force (optional) can delete all files without confirmation
 

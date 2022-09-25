@@ -33,7 +33,7 @@ class DummyClass extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Plop2Request  $request
+     * @param  DummyModelRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(DummyModelRequest $request)
@@ -72,7 +72,7 @@ DummyUpdate
     /**
      * Update the specified resource in storage.
      *
-     * @param  Plop2Request  $request
+     * @param  DummyModelRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

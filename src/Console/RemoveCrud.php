@@ -3,8 +3,8 @@
 namespace Mrdebug\Crudgen\Console;
 
 use Illuminate\Console\Command;
-use File;
-use Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class RemoveCrud extends Command
 {
@@ -13,7 +13,7 @@ class RemoveCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'remove:crud {crud_name} {--force}';
+    protected $signature = 'rm:crud {crud_name} {--force}';
 
     /**
      * The console command description.
