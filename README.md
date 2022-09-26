@@ -1,6 +1,11 @@
 # Crud Generator Laravel 9
 
-Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD (controller with all the code already written, views, model with relationships, request file with rules and the migration file).
+Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD :
+- **controller** with all the code already written
+- **views** (index, create, edit, show)
+- **model** with relationships
+- **request** file with rules
+- **migration** file
 
 ## Installation
 
@@ -27,7 +32,7 @@ A `Post` has many (hasMany) `Comment` and belongs to many (belongsToMany) `Tag`
 
 A `Post` can have a `title` and a `content` fields
 
-Let's do this :)
+Let's do this 🙂
 
 #### CRUD generator command :
 
@@ -45,7 +50,7 @@ Now let's add our relationships (`Comment` and `Tag` models) :
 ![image](https://user-images.githubusercontent.com/23297600/192173041-6c71d727-1e29-4edc-9397-bdb07f44a378.png)
 
 We add an `hasMany` relationship between our `Post` and `Comment`
-and a belongsToMany with `Tag`
+and a `belongsToMany` with `Tag`
 
 If you look good, two migrations are created (`create_posts` AND `create_post_tag`).
 
@@ -82,7 +87,7 @@ To create your routes for this new controller, you can do this :
 `/posts` :
 ![image](https://user-images.githubusercontent.com/23297600/192176845-b3722083-90a9-4257-90d1-8a2eb28baa01.png)
 
-You can `edit` and `delete` too your new post. And a `show` page is created too :)
+You can `edit` and `delete` too your new post. And a `show` page is created too 🙂
 
 ### Request
 
@@ -106,6 +111,8 @@ Add your `Tag` CRUD (with a `column` name)
 
 ``` php artisan make:crud tag "name" ```
 
+Finished 🎉
+
 ## Remove a CRUD
 
 You can delete all files (except migrations) created by the `make:crud` command at any time (you don't need to remove all files by hand)
@@ -122,3 +129,11 @@ You can delete all files (except migrations) created by the `make:crud` command 
 ## License
 
 This package is licensed under the [license MIT](http://opensource.org/licenses/MIT).
+
+
+
+tests
+vendor/bin/phpunit vendor/mrdebug/crudgen/tests/
+php artisan make:crud post "title, url"
+php artisan rm:crud post --force
+php artisan test
