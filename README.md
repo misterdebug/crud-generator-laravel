@@ -130,10 +130,3 @@ You can delete all files (except migrations) created by the `make:crud` command 
 
 This package is licensed under the [license MIT](http://opensource.org/licenses/MIT).
 
-
-
-tests
-vendor/bin/phpunit vendor/mrdebug/crudgen/tests/
-php artisan make:crud post "title, url"
-php artisan rm:crud post --force
-php artisan test
