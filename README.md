@@ -116,6 +116,8 @@ You can delete all files (except migrations) created by the `make:crud` command 
 
 --force (optional) can delete all files without confirmation
 
+![image](https://user-images.githubusercontent.com/23297600/192183601-a4f8d206-3920-4f8a-8e0d-cf8442894e07.png)
+
 
 ## License
 
