@@ -97,5 +97,25 @@ class PathsAndNamespacesService
         return database_path(DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR);
     }
 
+    /** paths views */
+    public function getRealpathBaseViews()
+    {
+        return $this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views');
+    }
+
+    public function getRealpathBaseCustomViews($namingConvention)
+    {
+        return $this->getRealpathBaseViews().DIRECTORY_SEPARATOR.$namingConvention['plural_low_name'];
+    }
+
+    public function getCrudgenViewsStub()
+    {
+        return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views');
+    }
+
+    public function getCrudgenViewsStubCustom($templateViewsDirectory)
+    {
+        return $this->getCrudgenViewsStub().DIRECTORY_SEPARATOR.$templateViewsDirectory;
+    }
 
 }

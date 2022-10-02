@@ -26,7 +26,6 @@ class MakeControllerService
 
     public function replaceContentControllerStub($namingConvention, $laravelNamespace)
     {
-        //dd($this->laravel);
         $controllerStub = File::get($this->pathsAndNamespacesService->getControllerStubPath());
         $controllerStub = str_replace('DummyClass', $namingConvention['plural_name'].'Controller', $controllerStub);
         $controllerStub = str_replace('DummyModel', $namingConvention['singular_name'], $controllerStub);

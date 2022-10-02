@@ -4,7 +4,8 @@ namespace Mrdebug\Crudgen\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Mrdebug\Crudgen\Services\MakeGlobalService;
+use Mrdebug\Crudgen\Services\RemoveCrudService;
 
 class RemoveCrud extends Command
 {
@@ -22,14 +23,13 @@ class RemoveCrud extends Command
      */
     protected $description = 'Remove a crud operation';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public RemoveCrudService $removeCrudService;
+    public MakeGlobalService $makeGlobalService;
+    public function __construct(RemoveCrudService $removeCrudService,MakeGlobalService $makeGlobalService)
     {
         parent::__construct();
+        $this->removeCrudService = $removeCrudService;
+        $this->makeGlobalService = $makeGlobalService;
     }
 
     /**
@@ -40,82 +40,37 @@ class RemoveCrud extends Command
     public function handle()
     {
         // we create our variables to respect the naming conventions
-        $crud_name         = ucfirst($this->argument('crud_name'));
-        $plural_name       = Str::plural($crud_name);
-        $singular_name     = Str::singular($crud_name);
-        $singular_low_name = Str::singular(strtolower($crud_name));
-        $plural_low_name   = Str::plural(strtolower($crud_name));
+        $crudName         = ucfirst($this->argument('crud_name'));
+        $namingConvention = $this->makeGlobalService->getNamingConvention($crudName);
+        $force            = $this->option('force');
 
-        // if --force option is used, we delete all files without checks
-        if($this->option('force'))
+        $this->deleteFile($namingConvention, 'controller', $force);
+        $this->deleteDirectory($namingConvention, 'views', $force);
+        $this->deleteFile($namingConvention, 'request', $force);
+        $this->deleteFile($namingConvention, 'model', $force);
+    }
+
+    private function deleteFile($namingConvention, $fileType, $force)
+    {
+        if(File::exists($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
         {
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
+            if ($force || $this->confirm('Do you want to delete this '.$fileType.' '.$this->removeCrudService->pathsForFiles($namingConvention)[$fileType].'?'))
             {
-                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
-                    $this->line("<info>Controller deleted</info>");
-            }
-
-            if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
-            {
-                if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
-                    $this->line("<info>Views deleted</info>");
-            }
-
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
-            {
-                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
-                    $this->line("<info>Request deleted</info>");
-            }
-
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
-            {
-                if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
-                    $this->line("<info>Model deleted</info>");
-            }
-        }
-        // else we ask before deleting
-        else
-        {
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
-            {
-                if ($this->confirm('Do you want to delete this controller '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php ?'))
-                {
-                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.$plural_name.'Controller.php'))
-                        $this->line("<info>Controller deleted</info>");
-                }
-            }
-
-            if(File::isDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
-            {
-                if ($this->confirm('Do you want delete all files in this views directory '.$this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name.' ? '."\n".implode(", \n",File::files($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))))
-                {
-                    if(File::deleteDirectory($this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views').DIRECTORY_SEPARATOR.$plural_low_name))
-                        $this->line("<info>Views deleted</info>");
-                }
-            }
-
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
-            {
-                if ($this->confirm('Do you want to delete this request '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php ?'))
-                {
-                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests').DIRECTORY_SEPARATOR.$singular_name.'Request.php'))
-                        $this->line("<info>Request deleted</info>");
-                }
-            }
-
-            if(File::exists($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
-            {
-                if ($this->confirm('Do you want to delete this model '.$this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php ?'))
-                {
-                    if(File::delete($this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Models').DIRECTORY_SEPARATOR.$singular_name.'.php'))
-                        $this->line("<info>Model deleted</info>");
-                }
+                if(File::delete($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
+                    $this->line("<info>".ucfirst($fileType)." deleted</info>");
             }
         }
     }
 
-    protected function getRealpathBase($directory)
+    private function deleteDirectory($namingConvention, $fileType, $force)
     {
-        return realpath(base_path($directory));
+        if(File::isDirectory($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
+        {
+            if ($force || $this->confirm('Do you want delete all files in this '.$fileType.' directory '.$this->removeCrudService->pathsForFiles($namingConvention)[$fileType].' ? '."\n".implode(", \n",File::files($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))))
+            {
+                if(File::deleteDirectory($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
+                    $this->line("<info>".ucfirst($fileType)." deleted</info>");
+            }
+        }
     }
 }

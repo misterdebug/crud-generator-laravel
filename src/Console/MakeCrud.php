@@ -72,7 +72,6 @@ class MakeCrud extends Command
         $columns          = $this->makeGlobalService->parseColumns($this->argument('columns'));
         $laravelNamespace = $this->laravel->getNamespace();
 
-
         /* *************************************************************************
 
                                      CONTROLLER
