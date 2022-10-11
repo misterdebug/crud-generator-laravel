@@ -13,15 +13,18 @@ class MakeControllerService
     use InteractsWithIO;
 
     public PathsAndNamespacesService $pathsAndNamespacesService;
+    public MakeGlobalService $makeGlobalService;
     public function __construct(
         PathsAndNamespacesService $pathsAndNamespacesService,
         ConsoleOutput $consoleOutput,
-        Application $application
+        Application $application,
+        MakeGlobalService $makeGlobalService
     )
     {
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
         $this->output = $consoleOutput;
         $this->laravel = $application->getNamespace();
+        $this->makeGlobalService = $makeGlobalService;
     }
 
     public function replaceContentControllerStub($namingConvention, $laravelNamespace)
@@ -45,8 +48,10 @@ class MakeControllerService
             $column   = $type[0];
 
             // our placeholders
-            $cols .= str_repeat("\t", 2).'DummyCreateVariableSing$->'.trim($column).'=$request->input(\''.trim($column).'\');'."\n";
+            $cols .= str_repeat("\t", 2).'DummyCreateVariableSing$->'.trim($column).' = $request->input(\''.trim($column).'\');'."\n";
         }
+
+        $cols = $this->makeGlobalService->cleanLastLineBreak($cols);
 
         // we replace our placeholders
         $controllerStub = str_replace('DummyUpdate', $cols, $controllerStub);

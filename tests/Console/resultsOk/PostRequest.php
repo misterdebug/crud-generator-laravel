@@ -19,15 +19,14 @@ class PostRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return
         [
-			'title'=>'required',
-			'url'=>'required',
-
+			'title' => 'required',
+			'url' => 'required',
         ];
     }
 }

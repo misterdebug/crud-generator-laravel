@@ -39,9 +39,8 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
         $post = new Post;
-		$post->title=$request->input('title');
-		$post->url=$request->input('url');
-
+		$post->title = $request->input('title');
+		$post->url = $request->input('url');
         $post->save();
 
         return redirect()->route('posts.index');
@@ -81,10 +80,10 @@ class PostsController extends Controller
     public function update(PostRequest $request, $id)
     {
         $post = Post::findOrFail($id);
-		$post->title=$request->input('title');
-		$post->url=$request->input('url');
-
+		$post->title = $request->input('title');
+		$post->url = $request->input('url');
         $post->save();
+
         return redirect()->route('posts.index');
     }
 
@@ -97,8 +96,8 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-
         $post->delete();
+
         return redirect()->route('posts.index');
     }
 }

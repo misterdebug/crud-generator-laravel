@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class DummyClass extends Migration
 {
@@ -13,7 +14,7 @@ class DummyClass extends Migration
     public function up()
     {
         Schema::create('DummyTable', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 DummyFields
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ DummyFields
      */
     public function down()
     {
-        Schema::drop('DummyTable');
+        Schema::dropIfExists('DummyTable');
     }
 }

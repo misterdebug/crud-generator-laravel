@@ -11,10 +11,16 @@ class MakeRequestService
     use InteractsWithIO;
 
     public PathsAndNamespacesService $pathsAndNamespacesService;
-    public function __construct(PathsAndNamespacesService $pathsAndNamespacesService, ConsoleOutput $consoleOutput)
+    public MakeGlobalService $makeGlobalService;
+    public function __construct(
+        PathsAndNamespacesService $pathsAndNamespacesService,
+        ConsoleOutput $consoleOutput,
+        MakeGlobalService $makeGlobalService
+    )
     {
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
         $this->output = $consoleOutput;
+        $this->makeGlobalService = $makeGlobalService;
     }
 
 
@@ -38,8 +44,10 @@ class MakeRequestService
             $column   = $type[0];
 
             // our placeholders
-            $rules .= str_repeat("\t", 3)."'".trim($column)."'=>'"."required',\n";
+            $rules .= str_repeat("\t", 3)."'".trim($column)."' => '"."required',\n";
         }
+
+        $rules = $this->makeGlobalService->cleanLastLineBreak($rules);
 
         // we replace our placeholders
         $requestStub = str_replace('DummyRulesRequest', $rules, $requestStub);

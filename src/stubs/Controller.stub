@@ -81,6 +81,7 @@ DummyUpdate
         DummyCreateVariableSing$ = DummyModel::findOrFail($id);
 DummyUpdate
         DummyCreateVariableSing$->save();
+
         return redirect()->route('DummyVariable.index');
     }
 
@@ -93,8 +94,8 @@ DummyUpdate
     public function destroy($id)
     {
         DummyCreateVariableSing$ = DummyModel::findOrFail($id);
-
         DummyCreateVariableSing$->delete();
+
         return redirect()->route('DummyVariable.index');
     }
 }

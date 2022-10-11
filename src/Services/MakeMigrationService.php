@@ -13,10 +13,16 @@ class MakeMigrationService
     use InteractsWithIO;
 
     public PathsAndNamespacesService $pathsAndNamespacesService;
-    public function __construct(PathsAndNamespacesService $pathsAndNamespacesService, ConsoleOutput $consoleOutput)
+    public MakeGlobalService $makeGlobalService;
+    public function __construct(
+        PathsAndNamespacesService $pathsAndNamespacesService,
+        ConsoleOutput $consoleOutput,
+        MakeGlobalService $makeGlobalService
+    )
     {
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
         $this->output = $consoleOutput;
+        $this->makeGlobalService = $makeGlobalService;
     }
 
     public function replaceContentMigrationStub($namingConvention)
@@ -43,6 +49,8 @@ class MakeMigrationService
             // our placeholders
             $fieldsMigration .= str_repeat("\t", 3).'$table'."->$sqlType('".trim($column)."');\n";
         }
+
+        $fieldsMigration = $this->makeGlobalService->cleanLastLineBreak($fieldsMigration);
 
         // we replace our placeholders
         $migrationStub = str_replace('DummyFields', $fieldsMigration, $migrationStub);

@@ -30,4 +30,9 @@ class MakeGlobalService
         // if the columns argument is empty, we create an empty array else we explode on the comma
         return ($columns=='') ? [] : explode(',', $columns);
     }
+
+    public function cleanLastLineBreak($string)
+    {
+        return rtrim($string, "\n");
+    }
 }
