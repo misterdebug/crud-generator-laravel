@@ -1,0 +1,80 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespaceHttp\Controllers\Controller;
+
+use DummyRootNamespaceModels\DummyModel;
+use DummyRootNamespaceHttp\Requests\DummyModelRequest;
+use DummyRootNamespaceHttp\Resources\DummyResource;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        DummyCreateVariable$ = DummyModel::paginate(15);
+        return DummyResource::collection(DummyCreateVariable$);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  DummyModelRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DummyModelRequest $request)
+    {
+        DummyCreateVariableSing$ = new DummyModel;
+DummyUpdate
+        DummyCreateVariableSing$->save();
+
+        return response()->json(DummyCreateVariableSing$, 201);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        return new DummyResource(DummyCreateVariableSing$);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  DummyModelRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(DummyModelRequest $request, $id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+DummyUpdate
+        DummyCreateVariableSing$->save();
+
+        return response()->json(DummyCreateVariableSing$);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        DummyCreateVariableSing$->delete();
+
+        return response()->json(null, 204);
+    }
+}
