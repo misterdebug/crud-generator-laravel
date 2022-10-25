@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Console;
 
 use App\Models\Category;
 use App\Models\User;
@@ -32,7 +32,7 @@ class MakeApiCrudTest extends TestCase
         $this->assertCount(0, $arrayViewsExisting);
 
         //controller
-        $this->assertSame(File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/api/ApiPostsController.php'), File::get(app_path('Http/Controllers/API/PostsController.php')));
+        $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/api/ApiPostsController.php')), preg_replace('/\s+/', '', File::get(app_path('Http/Controllers/API/PostsController.php'))));
 
         // request
         $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/api/PostRequest.php')), preg_replace('/\s+/', '', File::get(app_path('Http/Requests/PostRequest.php'))));

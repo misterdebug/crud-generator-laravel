@@ -14,15 +14,18 @@ class MakeModelService
 
     public PathsAndNamespacesService $pathsAndNamespacesService;
     public MakeMigrationService $makeMigrationService;
+    public MakeGlobalService $makeGlobalService;
     public function __construct(
         PathsAndNamespacesService $pathsAndNamespacesService,
         MakeMigrationService $makeMigrationService,
-        ConsoleOutput $consoleOutput
+        ConsoleOutput $consoleOutput,
+        MakeGlobalService $makeGlobalService
     )
     {
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
         $this->makeMigrationService = $makeMigrationService;
         $this->output = $consoleOutput;
+        $this->makeGlobalService = $makeGlobalService;
     }
 
     public function getAllRelationshipMethodsModel($infos, $singularName, $laravelNamespace)
@@ -37,7 +40,7 @@ class MakeModelService
 
             $allRelations .= str_repeat("\t", 1).'public function '.$nameFunction.'()'."\n";
             $allRelations .= str_repeat("\t", 1).'{'."\n";
-            $allRelations .= str_repeat("\t", 2).'return $this->'.$info['type'].'(\''.$laravelNamespace.''.ucfirst(Str::singular($info['name'])).'\');'."\n";
+            $allRelations .= str_repeat("\t", 2).'return $this->'.$info['type'].'(\''.$laravelNamespace.'Models\\'.ucfirst(Str::singular($info['name'])).'\');'."\n";
             $allRelations .= str_repeat("\t", 1).'}'."\n\n";
 
 
@@ -56,7 +59,7 @@ class MakeModelService
             }
         }
 
-        return $allRelations;
+        return $this->makeGlobalService->cleanLastLineBreak($allRelations);
     }
 
     public function replaceContentModelStub($laravelNamespace, $singularName, $allRelations)

@@ -161,7 +161,7 @@ class MakeCrud extends Command
 
         //we stock all relationships in $infos
         $correctNameOtherModel = ucfirst(Str::singular($nameOtherModel));
-        $correctNameOtherModelWithNamespace = $this->laravel->getNamespace().''.$correctNameOtherModel;
+        $correctNameOtherModelWithNamespace = $this->laravel->getNamespace().'Models\\'.$correctNameOtherModel;
         if($this->confirm('Do you confirm the creation of this relationship? "'.'$this->'.$type.'(\''.$correctNameOtherModelWithNamespace .'\')"'))
         {
             $infos[]= ['name'=>$nameOtherModel, 'type'=>$type];

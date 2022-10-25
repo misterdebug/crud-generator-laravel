@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Console;
 
 use App\Models\Category;
 use App\Models\User;
@@ -38,7 +38,7 @@ class MakeCrudTest extends TestCase
         }
 
         //controller
-        $this->assertSame(File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/PostsController.php'), File::get(app_path('Http/Controllers/PostsController.php')));
+        $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/PostsController.php')), preg_replace('/\s+/', '', File::get(app_path('Http/Controllers/PostsController.php'))));
 
         // request
         $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/PostRequest.php')), preg_replace('/\s+/', '', File::get(app_path('Http/Requests/PostRequest.php'))));
@@ -63,7 +63,7 @@ class MakeCrudTest extends TestCase
             ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'yes')
             ->expectsQuestion('Which type?', 'hasMany')
             ->expectsQuestion('What is the name of the other model? ex:Post', 'Comment')
-            ->expectsConfirmation('Do you confirm the creation of this relationship? "$this->hasMany(\'App\Comment\')"', 'yes')
+            ->expectsConfirmation('Do you confirm the creation of this relationship? "$this->hasMany(\'App\Models\Comment\')"', 'yes')
 
             ;
 
