@@ -11,7 +11,12 @@ class PathsAndNamespacesService
 
     public function getDefaultNamespaceRequest($rootNamespace)
     {
-        return $rootNamespace.'Http'.DIRECTORY_SEPARATOR.'Requests';
+        return $rootNamespace.'Http\Requests';
+    }
+
+    public function getDefaultNamespaceResource($rootNamespace)
+    {
+        return $rootNamespace.'Http\Resources';
     }
 
     public function getRealpathBase($directory)
@@ -23,7 +28,7 @@ class PathsAndNamespacesService
 
     public function getDefaultNamespaceController($rootNamespace)
     {
-        return $rootNamespace.'Http'.DIRECTORY_SEPARATOR.'Controllers';
+        return $rootNamespace.'Http\Controllers';
     }
 
     public function getRealpathBaseController()
@@ -41,11 +46,38 @@ class PathsAndNamespacesService
         return $this->getStubPath().DIRECTORY_SEPARATOR.'Controller.stub';
     }
 
+    /** paths api controller */
+
+    public function getDefaultNamespaceApiController($rootNamespace)
+    {
+        return $rootNamespace.'Http\Controllers\API';
+    }
+
+    public function getRealpathBaseApiController()
+    {
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.'API';
+    }
+
+    public function getRealpathBaseCustomApiController($namingConvention)
+    {
+        return $this->getRealpathBaseApiController().DIRECTORY_SEPARATOR.$namingConvention['plural_name'].'Controller.php';
+    }
+
+    public function getApiControllerStubPath()
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'Controller-api.stub';
+    }
+
     /** paths request */
 
     public function getRequestStubPath()
     {
         return $this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub';
+    }
+
+    public function getApiRequestStubPath()
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'request.stub';
     }
 
     public function getRealpathBaseRequest()
@@ -56,6 +88,23 @@ class PathsAndNamespacesService
     public function getRealpathBaseCustomRequest($namingConvention)
     {
         return $this->getRealpathBaseRequest().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Request.php';
+    }
+
+    /** paths resource */
+
+    public function getResourceStubPath()
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'resource.stub';
+    }
+
+    public function getRealpathBaseResource()
+    {
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Resources';
+    }
+
+    public function getRealpathBaseCustomResource($namingConvention)
+    {
+        return $this->getRealpathBaseResource().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Resource.php';
     }
 
     /** paths models */

@@ -69,31 +69,6 @@ class MakeViewsService
         return $controllerStub;
     }
 
-    public function checkPublishVendorAndViewsDirectoryExists($templateViewsDirectory)
-    {
-        if(!File::isDirectory($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory)))
-        {
-            if($templateViewsDirectory=='default-theme')
-                $this->error("Publish the default theme with: php artisan vendor:publish or create your own default-theme directory here: ".$this->pathsAndNamespacesService->getRealpathBaseThemeViewsCrudgen());
-            else
-                $this->error("Do you have created a directory called ".$templateViewsDirectory." here: ".$this->pathsAndNamespacesService->getRealpathBaseThemeViewsCrudgen().'?');
-            return;
-        }
-        else
-        {
-            $stubs=['index', 'create', 'edit', 'show'];
-            // check if all stubs exist
-            foreach ($stubs as $stub)
-            {
-                if (!File::exists($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.$stub.'.stub'))
-                {
-                    $this->error('Please create this file: '.$this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.$stub.'.stub');
-                    return;
-                }
-            }
-        }
-    }
-
     public function findAndReplaceIndexViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions)
     {
         $thIndex=$indexView='';

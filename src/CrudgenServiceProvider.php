@@ -15,7 +15,7 @@ class CrudgenServiceProvider extends ServiceProvider
     {
         //publish config file
         $this->publishes([__DIR__.'/../config/crudgen.php' => config_path('crudgen.php')]);
-        
+
         //default-theme
         $this->publishes([__DIR__.'/stubs/default-theme/' => resource_path('crudgen/views/default-theme/')]);
 
@@ -35,7 +35,9 @@ class CrudgenServiceProvider extends ServiceProvider
         $this->commands(
             'Mrdebug\Crudgen\Console\MakeCrud',
             'Mrdebug\Crudgen\Console\MakeViews',
-            'Mrdebug\Crudgen\Console\RemoveCrud'
+            'Mrdebug\Crudgen\Console\RemoveCrud',
+            'Mrdebug\Crudgen\Console\MakeApiCrud',
+            'Mrdebug\Crudgen\Console\RemoveApiCrud'
         );
     }
 }
