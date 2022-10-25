@@ -15,7 +15,7 @@ class MakeApiCrudTest extends TestCase
     public function setUp():void
     {
         parent::setUp();
-        $this->artisan('rm:crud-api', ['crud_name'=>"post", "--force"=>true]);
+        $this->artisan('rm:rest-api', ['crud_name'=>"post", "--force"=>true]);
         foreach(glob(database_path('migrations/').date('Y').'*') as $migration)
             File::delete($migration);
     }
@@ -24,7 +24,7 @@ class MakeApiCrudTest extends TestCase
     {
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(0, $arrayViewsExisting);
-        $this->artisan('make:crud-api', ['crud_name'=>"post", "columns"=>"title, content:text"])
+        $this->artisan('make:rest-api', ['crud_name'=>"post", "columns"=>"title, content:text"])
             ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'no');
 
         //views
@@ -53,7 +53,7 @@ class MakeApiCrudTest extends TestCase
 
     public function tearDown():void
     {
-        $this->artisan('rm:crud-api', ['crud_name'=>"post", "--force"=>true]);
+        $this->artisan('rm:rest-api', ['crud_name'=>"post", "--force"=>true]);
         foreach(glob(database_path('migrations/').date('Y').'*') as $migration)
             File::delete($migration);
     }

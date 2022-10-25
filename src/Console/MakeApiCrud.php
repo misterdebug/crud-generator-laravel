@@ -21,14 +21,14 @@ class MakeApiCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud-api {crud_name} {columns}';
+    protected $signature = 'make:rest-api {crud_name} {columns}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make an API CRUD';
+    protected $description = 'Make a REST API';
 
     /**
      * Create a new command instance.

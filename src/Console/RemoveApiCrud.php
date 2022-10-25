@@ -14,14 +14,14 @@ class RemoveApiCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'rm:crud-api {crud_name} {--force}';
+    protected $signature = 'rm:rest-api {crud_name} {--force}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Remove a crud operation';
+    protected $description = 'Remove a REST API operation';
 
     public RemoveApiCrudService $removeApiCrudService;
     public MakeGlobalService $makeGlobalService;

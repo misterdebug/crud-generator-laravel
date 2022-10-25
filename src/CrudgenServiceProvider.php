@@ -37,7 +37,7 @@ class CrudgenServiceProvider extends ServiceProvider
             'Mrdebug\Crudgen\Console\MakeViews',
             'Mrdebug\Crudgen\Console\RemoveCrud',
             'Mrdebug\Crudgen\Console\MakeApiCrud',
-            'Mrdebug\Crudgen\Console\RemoveApiCrud',
+            'Mrdebug\Crudgen\Console\RemoveApiCrud'
         );
     }
 }
