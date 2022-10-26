@@ -1,4 +1,4 @@
-# Crud Generator Laravel 9
+# Crud Generator Laravel 9 (your time saver)
 
 Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD :
 - **controller** with all the code already written
@@ -6,6 +6,8 @@ Crud Generator Laravel is a package that you can integrate in your Laravel to cr
 - **model** with relationships
 - **request** file with rules
 - **migration** file
+
+And since 1.9.2, a complete **REST API** !
 
 ## Installation
 
@@ -24,7 +26,7 @@ Crud Generator Laravel is a package that you can integrate in your Laravel to cr
 
 ## Usage
 
-### Create Crud 
+### Create CRUD (or REST API)
 
 Let's make a real life example : Build a blog
 
@@ -33,6 +35,8 @@ A `Post` has many (hasMany) `Comment` and belongs to many (belongsToMany) `Tag`
 A `Post` can have a `title` and a `content` fields
 
 Let's do this 🙂
+
+You need a REST API instead of a CRUD ? Read this wiki : [https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD](url)
 
 #### CRUD generator command :
 
