@@ -36,7 +36,7 @@ A `Post` can have a `title` and a `content` fields
 
 Let's do this 🙂
 
-<sub>You need a REST API instead of a CRUD ? Read this wiki : [https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD](url)</sub>
+<sub>You need a REST API instead of a CRUD ? [Read this wiki](https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD)</sub>
 
 #### CRUD generator command :
 
@@ -44,7 +44,7 @@ Let's do this 🙂
 
 ``` php artisan make:crud post "title:string, content:text" ``` (for our example)
 
-<sub>Available options: [https://github.com/misterdebug/crud-generator-laravel/wiki/Available-options-when-you-use-make:crud-command](url)</sub>
+<sub>[Available options](https://github.com/misterdebug/crud-generator-laravel/wiki/Available-options-when-you-use-make:crud-command)</sub>
 
 When you call this command, controller, views and request are generated with your fields (here: title and content).
 ![image](https://user-images.githubusercontent.com/23297600/192172786-1703f7b8-f577-45c1-b0f9-296999827af2.png)
@@ -100,7 +100,7 @@ A request file is created in your **app/Http/Requests** directory. By default, a
 ### Views
 
 A views directory is created in your **resources/views** directory.
-<sub>You want to customize generated views ? [https://github.com/misterdebug/crud-generator-laravel/wiki/Custom-your-views](url)</sub>
+<sub>You want to customize generated views ? [https://github.com/misterdebug/crud-generator-laravel/wiki/Custom-your-views](https://github.com/misterdebug/crud-generator-laravel/wiki/Custom-your-views)</sub>
 
 You can create views independently of the CRUD generator with :
 ``` php artisan make:views nameOfYourDirectoryViews "column1:type, column2" ```
