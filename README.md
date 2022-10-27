@@ -36,7 +36,7 @@ A `Post` can have a `title` and a `content` fields
 
 Let's do this 🙂
 
-You need a REST API instead of a CRUD ? Read this wiki : [https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD](url)
+<sub>You need a REST API instead of a CRUD ? Read this wiki : [https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD](url)</sub>
 
 #### CRUD generator command :
 
