@@ -5,6 +5,7 @@ namespace Mrdebug\Crudgen\Console;
 use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Pluralizer;
 use Illuminate\Support\Str;
 use Mrdebug\Crudgen\Services\MakeControllerService;
 use Mrdebug\Crudgen\Services\MakeGlobalService;
@@ -20,7 +21,7 @@ class MakeCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {crud_name} {columns}';
+    protected $signature = 'make:crud {crud_name} {columns} {lang=english}';
 
     /**
      * The console command description.
@@ -67,6 +68,7 @@ class MakeCrud extends Command
     public function handle()
     {
         // we create our variables to respect the naming conventions
+        if($this->argument('lang')) Pluralizer::useLanguage($this->argument('lang')); 
         $crudName         = ucfirst($this->argument('crud_name'));
         $namingConvention = $this->makeGlobalService->getNamingConvention($crudName);
         $columns          = $this->makeGlobalService->parseColumns($this->argument('columns'));
