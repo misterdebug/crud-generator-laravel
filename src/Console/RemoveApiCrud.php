@@ -4,7 +4,7 @@ namespace Mrdebug\Crudgen\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Mrdebug\Crudgen\Services\API\RemoveApiCrudService;
+use Mrdebug\Crudgen\Services\Api\RemoveApiCrudService;
 use Mrdebug\Crudgen\Services\MakeGlobalService;
 
 class RemoveApiCrud extends Command
