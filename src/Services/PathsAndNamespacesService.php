@@ -82,7 +82,7 @@ class PathsAndNamespacesService
 
     public function getRealpathBaseRequest()
     {
-        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Requests');
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests';
     }
 
     public function getRealpathBaseCustomRequest($namingConvention)
