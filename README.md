@@ -1,4 +1,4 @@
-# Crud Generator Laravel 9 (your time saver)
+# Crud Generator Laravel 9 and 10 (your time saver)
 
 Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD :
 - **controller** with all the code already written
