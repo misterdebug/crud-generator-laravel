@@ -2,28 +2,43 @@
     "name": "mrdebug/crudgen",
     "description": "Create a Laravel Crud in a few seconds",
     "license": "MIT",
+    "keywords": [
+        "laravel",
+        "crud",
+        "rest",
+        "generator",
+        "rest-api",
+        "laravel-package",
+        "crud-generator",
+        "laravel-crud-generator",
+        "composer-package",
+        "laravel-crud",
+        "laravel8",
+        "laravel9",
+        "laravel10"
+    ],
     "authors": [
         {
             "name": "Jonathan Escarem",
             "email": "contact@escarem-jonathan.fr"
         }
     ],
-    "require": 
+    "require":
     	{
-    		"php": ">=5.5.9"
+    		"php": ">=8.0.0"
     	},
-    "autoload": 
+    "autoload":
     {
-        "psr-4": 
+        "psr-4":
         {
             "Mrdebug\\Crudgen\\": "src/"
         }
     },
-    "extra": 
+    "extra":
     {
-        "laravel": 
+        "laravel":
         {
-            "providers": 
+            "providers":
             [
                 "Mrdebug\\Crudgen\\CrudgenServiceProvider"
             ]
