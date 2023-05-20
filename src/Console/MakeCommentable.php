@@ -154,11 +154,11 @@ class MakeCommentable extends Command
     private function askChangeView($namingConvention)
     {
         $allViews = $this->makeGlobalService->getAllViewsFiles();
+        $this->error("Before to continue, please indicate this placeholder : {{comment_here}} where you want the form to be displayed");
         $chosenView = $this->choice(
             'On which view do you want to add the comment part?',
             $allViews,
         );
-        $this->info("Before to continue, please indicate this placeholder : {{comment_here}} where you want the form to be displayed here: ".$chosenView);
         $this->editCommentableView->editViewFile($chosenView, $namingConvention, $this->nameParentModel);
     }
 }
