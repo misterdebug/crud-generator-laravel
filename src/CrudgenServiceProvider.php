@@ -3,6 +3,13 @@
 namespace Mrdebug\Crudgen;
 
 use Illuminate\Support\ServiceProvider;
+use Mrdebug\Crudgen\Console\MakeApiCrud;
+use Mrdebug\Crudgen\Console\MakeCommentable;
+use Mrdebug\Crudgen\Console\MakeCrud;
+use Mrdebug\Crudgen\Console\MakeViews;
+use Mrdebug\Crudgen\Console\RemoveApiCrud;
+use Mrdebug\Crudgen\Console\RemoveCommentable;
+use Mrdebug\Crudgen\Console\RemoveCrud;
 
 class CrudgenServiceProvider extends ServiceProvider
 {
@@ -33,11 +40,13 @@ class CrudgenServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/crudgen.php', 'crudgen');
 
         $this->commands(
-            'Mrdebug\Crudgen\Console\MakeCrud',
-            'Mrdebug\Crudgen\Console\MakeViews',
-            'Mrdebug\Crudgen\Console\RemoveCrud',
-            'Mrdebug\Crudgen\Console\MakeApiCrud',
-            'Mrdebug\Crudgen\Console\RemoveApiCrud'
+            MakeCrud::class,
+            MakeViews::class,
+            RemoveCrud::class,
+            MakeApiCrud::class,
+            RemoveApiCrud::class,
+            MakeCommentable::class,
+            RemoveCommentable::class,
         );
     }
 }

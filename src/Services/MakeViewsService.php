@@ -176,6 +176,4 @@ class MakeViewsService
         ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');
     }
-
-
 }

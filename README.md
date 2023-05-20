@@ -17,7 +17,7 @@ And since 1.9.2, a complete **REST API** !
 
 2\. If you don't use Laravel Collective Form package in your project, install it:
 
-``` composer require laravelcollective/html ```
+``` composer require laravelcollective/html ``` <sub>not required if you don't need views</sub>
 
 3\. Publish config file and default-theme directory for views
 
@@ -114,6 +114,9 @@ Add your `Comment` CRUD (with a column `comment` and a `post_id`)
 Add your `Tag` CRUD (with a `column` name)
 
 ``` php artisan make:crud tag "name" ```
+
+FYI : `Comment` is a specific case and you can use `make:commentable` command
+[Docs about commentable](https://github.com/misterdebug/crud-generator-laravel/wiki/Add-a-commentable-structure-to-any-model)</sub>
 
 Finished 🎉
 

@@ -1,0 +1,41 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespaceHttp\Controllers\Controller;
+
+use DummyRootNamespaceModels\DummyModel;
+use DummyRootNamespaceHttp\Requests\DummyModelRequest;
+
+class DummyClass extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  DummyModelRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(DummyModelRequest $request, $id)
+    {
+        DummyCreateVariableSing$ = new DummyModel;
+        DummyCreateVariableSing$->comment = $request->input('comment');
+        DummyCreateVariableSing$->DummyRelationshipName_id = $id;
+        DummyCreateVariableSing$->save();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        DummyCreateVariableSing$->delete();
+
+        return redirect()->back();
+    }
+}

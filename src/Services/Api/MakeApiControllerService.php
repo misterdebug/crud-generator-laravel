@@ -84,7 +84,7 @@ class MakeApiControllerService
         $controllerStub = $this->replaceContentApiControllerStub($namingConvention, $laravelNamespace);
         $controllerStub = $this->findAndReplaceApiControllerPlaceholderColumns($columns, $controllerStub, $namingConvention);
 
-        // if our controller doesn't exists we create it
+        // if our controller doesn't exist we create it
         $pathNewController = $this->pathsAndNamespacesService->getRealpathBaseCustomApiController($namingConvention);
         $this->createApiControllerFile($pathNewController, $controllerStub, $namingConvention);
     }

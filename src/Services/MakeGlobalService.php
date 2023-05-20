@@ -13,7 +13,7 @@ class MakeGlobalService
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
     }
 
-    public function getNamingConvention($crudName)
+    public function getNamingConvention($crudName): array
     {
         return
         [
@@ -34,5 +34,31 @@ class MakeGlobalService
     public function cleanLastLineBreak($string)
     {
         return rtrim($string, "\n");
+    }
+
+    public function getCommentableNamingConvention($commentableName): array
+    {
+        return
+        [
+            'controller_name'            => Str::plural(Str::studly($commentableName)),
+            'model_name'                 => Str::singular(Str::studly($commentableName)),
+            'singular_low_variable_name' => Str::singular(Str::camel(Str::lower($commentableName))),
+            'plural_low_variable_name'   => Str::plural(Str::camel(Str::lower($commentableName))),
+            'table_name'                 => Str::plural(Str::snake($commentableName)),
+        ];
+    }
+
+    public function getAllViewsFiles()
+    {
+        return glob(resource_path("views".DIRECTORY_SEPARATOR."*".DIRECTORY_SEPARATOR."*.blade.php"));
+    }
+
+    public function getCommentableParentModelConvention($commentableParentName): array
+    {
+        return
+        [
+            'singular_low_variable_name' => Str::singular(Str::camel(Str::lower($commentableParentName))),
+            'plural_low_variable_name'   => Str::plural(Str::camel(Str::lower($commentableParentName))),
+        ];
     }
 }
