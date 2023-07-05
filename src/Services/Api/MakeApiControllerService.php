@@ -74,6 +74,7 @@ class MakeApiControllerService
         {
             File::put($pathNewController, $controllerStub);
             $this->line("<info>Created Controller:</info> ".$namingConvention['plural_name']);
+            $this->info("Don't forget to add routes (in api.php) like this : Route::apiResource('".$namingConvention['plural_low_name']."', ".$namingConvention['plural_name']."Controller::class);");
         }
         else
             $this->error('Controller '.$namingConvention['plural_name'].' already exists');
