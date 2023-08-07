@@ -78,7 +78,7 @@ class MakeViewsService
             $column    = $type[0];
 
             // our placeholders
-            $thIndex    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
+            $thIndex    .=str_repeat("\t", 4)."<th>{{ __('".trim($column)."') }}</th>\n";
             $indexView  .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
         }
 
@@ -107,7 +107,7 @@ class MakeViewsService
 
             // our placeholders
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
+            $formCreate .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', __(\''.ucfirst(trim($column)).'\'), [\'class\'=>\'form-label\']) }}'."\n";
             $formCreate .=str_repeat("\t", 3).'{{ Form::'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
             $formCreate .=str_repeat("\t", 2).'</div>'."\n";
         }
@@ -141,7 +141,7 @@ class MakeViewsService
 
             // our placeholders
             $formEdit .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ Form::label(\''.trim($column).'\', __(\''.ucfirst(trim($column)).'\'), [\'class\'=>\'form-label\']) }}'."\n";
             $formEdit .=str_repeat("\t", 3).'{{ Form::'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
             $formEdit .=str_repeat("\t", 2).'</div>'."\n";
         }
@@ -172,7 +172,7 @@ class MakeViewsService
         [
             'string'  => 'text',
             'text'    => 'textarea',
-            'integer' => 'text'
+            'integer' => 'number'
         ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');
     }
