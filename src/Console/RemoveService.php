@@ -24,13 +24,14 @@ class RemoveService extends Command
      */
     protected $description = 'Remove a service';
 
-    public RemoveCommentableService $removeCommentableService;
     public MakeGlobalService $makeGlobalService;
     public PathsAndNamespacesService $pathsAndNamespacesService;
-    public function __construct(RemoveCommentableService $removeCommentableService,MakeGlobalService $makeGlobalService, PathsAndNamespacesService $pathsAndNamespacesService)
+    public function __construct(
+        MakeGlobalService $makeGlobalService,
+        PathsAndNamespacesService $pathsAndNamespacesService
+    )
     {
         parent::__construct();
-        $this->removeCommentableService = $removeCommentableService;
         $this->makeGlobalService = $makeGlobalService;
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
     }
@@ -44,7 +45,7 @@ class RemoveService extends Command
     {
         // we create our variables to respect the naming conventions
         $serviceName      = ucfirst($this->argument('service_name'));
-        $namingConvention = $this->makeGlobalService->getCommentableNamingConvention($serviceName    );
+        $namingConvention = $this->makeGlobalService->getCommentableNamingConvention($serviceName);
         $force            = $this->option('force');
 
         $completePath = $this->pathsAndNamespacesService->getRealpathBaseCustomService($namingConvention);
