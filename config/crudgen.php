@@ -26,5 +26,13 @@ return
             'section'=>'content'
         ],
     ],
+    'paths' =>
+    [
+        'service' =>
+        [
+            'path' => app_path('Services'),
+            'namespace' => 'App\Services'
+        ]
+    ]
 
 ];

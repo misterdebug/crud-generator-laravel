@@ -6,10 +6,12 @@ use Illuminate\Support\ServiceProvider;
 use Mrdebug\Crudgen\Console\MakeApiCrud;
 use Mrdebug\Crudgen\Console\MakeCommentable;
 use Mrdebug\Crudgen\Console\MakeCrud;
+use Mrdebug\Crudgen\Console\MakeService;
 use Mrdebug\Crudgen\Console\MakeViews;
 use Mrdebug\Crudgen\Console\RemoveApiCrud;
 use Mrdebug\Crudgen\Console\RemoveCommentable;
 use Mrdebug\Crudgen\Console\RemoveCrud;
+use Mrdebug\Crudgen\Console\RemoveService;
 
 class CrudgenServiceProvider extends ServiceProvider
 {
@@ -47,6 +49,8 @@ class CrudgenServiceProvider extends ServiceProvider
             RemoveApiCrud::class,
             MakeCommentable::class,
             RemoveCommentable::class,
+            MakeService::class,
+            RemoveService::class
         );
     }
 }

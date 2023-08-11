@@ -45,6 +45,7 @@ class MakeGlobalService
             'singular_low_variable_name' => Str::singular(Str::camel(Str::lower($commentableName))),
             'plural_low_variable_name'   => Str::plural(Str::camel(Str::lower($commentableName))),
             'table_name'                 => Str::plural(Str::snake($commentableName)),
+            'service_name'               => Str::singular(Str::studly($commentableName)),
         ];
     }
 

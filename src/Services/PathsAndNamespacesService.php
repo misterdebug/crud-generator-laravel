@@ -184,6 +184,28 @@ class PathsAndNamespacesService
         return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'comment-block.stub';
     }
 
+    /** paths service */
+
+    public function getServiceStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'service'.DIRECTORY_SEPARATOR.'Service.stub';
+    }
+
+    public function getRealpathBaseService(): string
+    {
+        return config('crudgen.paths.service.path') ?? $this->getRealpathBase('app'.DIRECTORY_SEPARATOR).'Services';
+    }
+
+    public function getRealpathBaseCustomService($namingConvention): string
+    {
+        return $this->getRealpathBaseService().DIRECTORY_SEPARATOR.$namingConvention['service_name'].'.php';
+    }
+
+    public function getDefaultNamespaceService($rootNamespace): string
+    {
+        return config('crudgen.paths.service.namespace') ?? $rootNamespace.'Services';
+    }
+
     public function getCrudgenViewsStub()
     {
         return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views');
