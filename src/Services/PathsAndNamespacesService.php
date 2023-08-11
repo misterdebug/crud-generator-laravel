@@ -193,7 +193,7 @@ class PathsAndNamespacesService
 
     public function getRealpathBaseService(): string
     {
-        return config('crudgen.paths.service.path') ?? $this->getRealpathBase('app'.DIRECTORY_SEPARATOR).'Services';
+        return config('crudgen.paths.service.path') ?? $this->getRealpathBase('app').DIRECTORY_SEPARATOR.'Services';
     }
 
     public function getRealpathBaseCustomService($namingConvention): string
