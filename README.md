@@ -36,7 +36,7 @@ A `Post` can have a `title` and a `content` fields
 
 Let's do this 🙂
 
-<sub>You need a REST API instead of a CRUD ? [Read this wiki](https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD)</sub>
+<small>You need a REST API instead of a CRUD ? [Read this wiki](https://github.com/misterdebug/crud-generator-laravel/wiki/Make-a-complete-REST-API-instead-of-CRUD)</small>
 
 #### CRUD generator command :
 
@@ -44,7 +44,7 @@ Let's do this 🙂
 
 ``` php artisan make:crud post "title:string, content:text" ``` (for our example)
 
-<sub>[Available options](https://github.com/misterdebug/crud-generator-laravel/wiki/Available-options-when-you-use-make:crud-command)</sub>
+<small>[Available options](https://github.com/misterdebug/crud-generator-laravel/wiki/Available-options-when-you-use-make:crud-command)</small>
 
 When you call this command, controller, views and request are generated with your fields (here: title and content).
 ![image](https://user-images.githubusercontent.com/23297600/192172786-1703f7b8-f577-45c1-b0f9-296999827af2.png)
@@ -80,7 +80,7 @@ A controller file is created in your **app/Http/Controllers** directory. All met
 
 To create your routes for this new controller, you can do this :
 
-``` Route::resource('posts', PostsController::class); ``` <sub>(don't forget to import your `PostsController` in your `web.php` file)</sub>
+``` Route::resource('posts', PostsController::class); ``` <small>(don't forget to import your `PostsController` in your `web.php` file)</small>
 
 ##### Screenshots
 
@@ -116,7 +116,7 @@ Add your `Tag` CRUD (with a `column` name)
 ``` php artisan make:crud tag "name" ```
 
 FYI : `Comment` is a specific case and you can use `make:commentable` command
-[Docs about commentable](https://github.com/misterdebug/crud-generator-laravel/wiki/Add-a-commentable-structure-to-any-model)</sub>
+<small>[Docs about commentable](https://github.com/misterdebug/crud-generator-laravel/wiki/Add-a-commentable-structure-to-any-model)</small>
 
 Finished 🎉
 
