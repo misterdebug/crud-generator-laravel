@@ -26,13 +26,13 @@ class MakeCommentableTest extends TestCase
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(0, $arrayViewsExisting);
         $this->artisan('make:crud', ['crud_name'=>"post", "columns"=>"title, url"])
-            ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'no');
+            ->expectsConfirmation('Do you want to create relationships between this model and another one?', 'no');
 
         $expectedViews =  glob(resource_path("views".DIRECTORY_SEPARATOR."*".DIRECTORY_SEPARATOR."*.blade.php"));
         $this->artisan('make:commentable', ['commentable_name'=>"comment"])
-            ->expectsQuestion('What is the name of the other model where you want to add commentable part? ex:Post', 'post')
+            ->expectsQuestion('What is the name of the other model to which you want to add a commentable section? ex:Post', 'post')
             ->expectsConfirmation('Do you confirm the creation of this relationship? "$this->belongsTo(\'App\Models\Post\')"', 'yes')
-            ->expectsChoice('On which view do you want to add the comment part?', $expectedViews[3], $expectedViews);
+            ->expectsChoice('On which view do you want to add the comment section?', $expectedViews[3], $expectedViews);
 
         //controller
         $this->assertSame(preg_replace('/\s+/', '', File::get(__DIR__.DIRECTORY_SEPARATOR.'resultsOk/commentable/CommentsController.php')), preg_replace('/\s+/', '', File::get(app_path('Http/Controllers/CommentsController.php'))));

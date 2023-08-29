@@ -25,7 +25,7 @@ class MakeCrudTest extends TestCase
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(0, $arrayViewsExisting);
         $this->artisan('make:crud', ['crud_name'=>"post", "columns"=>"title, url"])
-            ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'no');
+            ->expectsConfirmation('Do you want to create relationships between this model and another one?', 'no');
 
         //views
         $arrayViewsCreated = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
@@ -60,7 +60,7 @@ class MakeCrudTest extends TestCase
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(0, $arrayViewsExisting);
         $this->artisan('make:crud', ['crud_name'=>"post", "columns"=>"title, url"])
-            ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'yes')
+            ->expectsConfirmation('Do you want to create relationships between this model and another one?', 'yes')
             ->expectsQuestion('Which type?', 'hasMany')
             ->expectsQuestion('What is the name of the other model? ex:Post', 'Comment')
             ->expectsConfirmation('Do you confirm the creation of this relationship? "$this->hasMany(\'App\Models\Comment\')"', 'yes')

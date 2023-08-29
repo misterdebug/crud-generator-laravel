@@ -25,7 +25,7 @@ class MakeApiCrudTest extends TestCase
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));
         $this->assertCount(0, $arrayViewsExisting);
         $this->artisan('make:rest-api', ['crud_name'=>"post", "columns"=>"title, content:text"])
-            ->expectsConfirmation('Do you want to create relationships between this model and an other one?', 'no');
+            ->expectsConfirmation('Do you want to create relationships between this model and another one?', 'no');
 
         //views
         $arrayViewsExisting = array_map(fn($path) => basename($path), glob(resource_path('views/posts/').'*'));

@@ -1,6 +1,6 @@
 # Crud Generator Laravel 9 and 10 (your time saver)
 
-Crud Generator Laravel is a package designed to simplify the creation of a complete CRUD system in your Laravel project. It includes:
+Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD. It includes :
 
 - **Controller** with all the code already written
 - **Views** (index, create, edit, show)

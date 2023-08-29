@@ -66,7 +66,7 @@ class RemoveCrud extends Command
     {
         if(File::isDirectory($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
         {
-            if ($force || $this->confirm('Do you want delete all files in this '.$fileType.' directory '.$this->removeCrudService->pathsForFiles($namingConvention)[$fileType].' ? '."\n".implode(", \n",File::files($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))))
+            if ($force || $this->confirm('Do you want to delete all files in this '.$fileType.' directory '.$this->removeCrudService->pathsForFiles($namingConvention)[$fileType].' ? '."\n".implode(", \n",File::files($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))))
             {
                 if(File::deleteDirectory($this->removeCrudService->pathsForFiles($namingConvention)[$fileType]))
                     $this->line("<info>".ucfirst($fileType)." deleted</info>");

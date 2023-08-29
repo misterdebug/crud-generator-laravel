@@ -22,7 +22,7 @@ class MakeService extends Command
      *
      * @var string
      */
-    protected $description = 'Create service file';
+    protected $description = 'Make a service file';
 
     /**
      * Create a new command instance.

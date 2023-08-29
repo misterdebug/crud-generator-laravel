@@ -29,7 +29,7 @@ class MakeCommentable extends Command
      *
      * @var string
      */
-    protected $description = 'Add commentable fields to existing view';
+    protected $description = 'Add commentable section to an existing view';
 
     /**
      * Create a new command instance.
@@ -133,7 +133,7 @@ class MakeCommentable extends Command
         $type = "belongsTo";
         $infos = [];
         $singularName = $namingConvention['model_name'];
-        $nameOtherModel = $this->ask('What is the name of the other model where you want to add commentable part? ex:Post');
+        $nameOtherModel = $this->ask('What is the name of the other model to which you want to add a commentable section? ex:Post');
 
         if($nameOtherModel === null)
             throw new ConsoleException('Please provide a model name');
@@ -154,9 +154,9 @@ class MakeCommentable extends Command
     private function askChangeView($namingConvention)
     {
         $allViews = $this->makeGlobalService->getAllViewsFiles();
-        $this->error("Before to continue, please indicate this placeholder : {{comment_here}} where you want the form to be displayed");
+        $this->error("Before continuing, please indicate the placeholder as follows: {{comment_here}}, where you want the form to be displayed.");
         $chosenView = $this->choice(
-            'On which view do you want to add the comment part?',
+            'On which view do you want to add the comment section?',
             $allViews,
         );
         $this->editCommentableView->editViewFile($chosenView, $namingConvention, $this->nameParentModel);
