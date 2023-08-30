@@ -2,6 +2,8 @@
 
 namespace Mrdebug\Crudgen\Services;
 
+use Illuminate\Support\Facades\File;
+
 class PathsAndNamespacesService
 {
     public function getStubPath(): string
@@ -181,7 +183,9 @@ class PathsAndNamespacesService
 
     public function getCommentableCommentBlockPath()
     {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'comment-block.stub';
+        $stubPath = resource_path('crudgen/commentable/comment-block.stub');
+
+        return File::exists($stubPath) ? $stubPath : $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'comment-block.stub';
     }
 
     /** paths service */

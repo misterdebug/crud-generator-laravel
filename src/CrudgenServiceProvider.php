@@ -28,8 +28,13 @@ class CrudgenServiceProvider extends ServiceProvider
         //default-theme
         $this->publishes([__DIR__.'/stubs/default-theme/' => resource_path('crudgen/views/default-theme/')]);
 
-        //and default-layout
+        //default-layout
         $this->publishes([__DIR__.'/stubs/default-layout.stub' => resource_path('views/default.blade.php')]);
+
+        //and commentable stub
+        $this->publishes([
+            __DIR__.'/stubs/commentable/views/comment-block.stub' => resource_path('crudgen/commentable/comment-block.stub')
+        ], 'commentable-stub');
     }
 
     /**

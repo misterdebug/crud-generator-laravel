@@ -13,7 +13,6 @@
 			        {!! Form::open(['method' => 'DELETE','route' => ['{{route_comment}}.destroy', {{comment_variable}}->id]]) !!}
                         {!! Form::submit('❌', ['class' => 'btn btn-sm']) !!}
                     {!! Form::close() !!}
-
 			</div>
 			<div class="card-body">
 				<div class="d-flex flex-start">
