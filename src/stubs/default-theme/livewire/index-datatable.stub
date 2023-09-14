@@ -1,0 +1,38 @@
+<div>
+    <div class="col-md-4 mt-4 mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" wire:model.live.debounce.500ms="search" placeholder="Search">
+            <span class="input-group-text">
+                🔍
+            </span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-3"><a href="{{ route('DummyVariable.create') }}" class="btn btn-info">Create</a></div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>id</th>
+DummyHeaderTable
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(DummyCreateVariable$ as DummyCreateVariableSing$)
+                <tr>
+                    <td>{{ DummyCreateVariableSing$->id }}</td>
+DummyIndexTable
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
+                            <a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Edit</a>
+                            {!! Form::open(['method' => 'DELETE','route' => ['DummyVariable.destroy', DummyCreateVariableSing$->id]]) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    {{ $posts->links() }}
+</div>

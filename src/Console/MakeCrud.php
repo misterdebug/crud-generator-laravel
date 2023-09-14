@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Mrdebug\Crudgen\Services\Livewire\MakeDatatableService;
 use Mrdebug\Crudgen\Services\MakeControllerService;
 use Mrdebug\Crudgen\Services\MakeGlobalService;
 use Mrdebug\Crudgen\Services\MakeMigrationService;
@@ -20,7 +21,7 @@ class MakeCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {crud_name} {columns}';
+    protected $signature = 'make:crud {crud_name} {columns} {{--with-livewire}}';
 
     /**
      * The console command description.
@@ -38,6 +39,7 @@ class MakeCrud extends Command
     public MakeRequestService $makeRequestService;
     public MakeMigrationService $makeMigrationService;
     public MakeModelService $makeModelService;
+    public MakeDatatableService $makeDatatableService;
     public MakeGlobalService $makeGlobalService;
     public PathsAndNamespacesService $pathsAndNamespacesService;
 
@@ -46,6 +48,7 @@ class MakeCrud extends Command
         MakeRequestService $makeRequestService,
         MakeMigrationService $makeMigrationService,
         MakeModelService $makeModelService,
+        MakeDatatableService $makeDatatableService,
         MakeGlobalService $makeGlobalService,
         PathsAndNamespacesService $pathsAndNamespacesService
     )
@@ -55,6 +58,7 @@ class MakeCrud extends Command
         $this->makeRequestService = $makeRequestService;
         $this->makeMigrationService = $makeMigrationService;
         $this->makeModelService = $makeModelService;
+        $this->makeDatatableService = $makeDatatableService;
         $this->makeGlobalService = $makeGlobalService;
         $this->pathsAndNamespacesService = $pathsAndNamespacesService;
     }
@@ -68,6 +72,7 @@ class MakeCrud extends Command
     {
         // we create our variables to respect the naming conventions
         $crudName         = ucfirst($this->argument('crud_name'));
+        $withLivewire     = $this->option('with-livewire');
         $namingConvention = $this->makeGlobalService->getNamingConvention($crudName);
         $columns          = $this->makeGlobalService->parseColumns($this->argument('columns'));
         $laravelNamespace = $this->laravel->getNamespace();
@@ -78,7 +83,18 @@ class MakeCrud extends Command
 
         ************************************************************************* */
 
-        $this->makeControllerService->makeCompleteControllerFile($namingConvention, $columns, $laravelNamespace);
+        $this->makeControllerService->makeCompleteControllerFile($namingConvention, $columns, $laravelNamespace, $withLivewire);
+
+        /* *************************************************************************
+
+                                    DATATABLE
+
+        ************************************************************************* */
+        if($withLivewire)
+        {
+            $columnNameInLivewireSearch = $this->setNameColumnInLivewireSearch($columns);
+            $this->makeDatatableService->makeCompleteDatatableFile($namingConvention, $laravelNamespace, $columnNameInLivewireSearch);
+        }
 
         /* *************************************************************************
 
@@ -91,9 +107,12 @@ class MakeCrud extends Command
             'make:views',
             [
                 'directory'=> $crudName,
-                'columns'=> $this->argument('columns')
+                'columns'=> $this->argument('columns'),
+                '--with-livewire' => $withLivewire,
+                'searchableColumn' => $columnNameInLivewireSearch ?? null
             ]
         );
+
 
         /* *************************************************************************
 
@@ -169,5 +188,16 @@ class MakeCrud extends Command
         }
         else
             $this->setNameModelRelationship($type, $namingConvention, $infos);
+    }
+
+    private function setNameColumnInLivewireSearch(array $columns)
+    {
+        $choices = $this->makeGlobalService->getColumnsNameFromInputConsole($columns);
+        $columnInSearch = $this->choice(
+            'Please specify which column you would like to use in the Livewire search?',
+            $choices
+        );
+
+        return $columnInSearch;
     }
 }

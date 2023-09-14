@@ -1,0 +1,33 @@
+<?php
+
+namespace DummyNamespace;
+
+use Livewire\Component;
+use DummyRootNamespaceModels\DummyModel;
+use Livewire\WithPagination;
+
+class DummyClass extends Component
+{
+    use WithPagination;
+
+    public $search = '';
+
+    public function render()
+    {
+        DummyCreateVariable$ = DummyModel::when($this->search, function ($query) {
+            $query->where('{{column-in-search}}', 'like', '%' . $this->search . '%');
+        })->paginate(10);
+
+        return view('{{directory-views}}.{{name-component}}-datatable', ['DummyVariable'=>DummyCreateVariable$]);
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function highlightTitle($title)
+    {
+        return str()->replace($this->search, '<span style="background-color: yellow">'. $this->search.'</span>', $title);
+    }
+}

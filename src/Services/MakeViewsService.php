@@ -69,7 +69,7 @@ class MakeViewsService
         return $controllerStub;
     }
 
-    public function findAndReplaceIndexViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions)
+    public function findAndReplaceIndexViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions, $withLivewire, $columnInSearch)
     {
         $thIndex=$indexView='';
         foreach ($columns as $column)
@@ -79,10 +79,17 @@ class MakeViewsService
 
             // our placeholders
             $thIndex    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
-            $indexView  .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
+
+            if($column == $columnInSearch)
+                $indexView  .=str_repeat("\t", 5).'<td>{!! $this->search ? $this->highlightTitle(DummyCreateVariableSing$->'.$columnInSearch.') : DummyCreateVariableSing$->'.$columnInSearch.' !!}</td>'."\n";
+            else
+                $indexView  .=str_repeat("\t", 5)."<td>{{ DummyCreateVariableSing$->".trim($column)." }}</td>\n";
         }
 
-        $indexStub = File::get($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.'index.stub');
+        $indexStub =  $withLivewire
+                    ? File::get($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.'livewire'.DIRECTORY_SEPARATOR.'index-datatable.stub')
+                    : File::get($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.'index.stub');
+
         $indexStub = str_replace('DummyCreateVariable$', '$'.$namingConvention['plural_low_name'], $indexStub);
         $indexStub = str_replace('DummyCreateVariableSing$', '$'.$namingConvention['singular_low_name'], $indexStub);
         $indexStub = str_replace('DummyHeaderTable', $thIndex, $indexStub);
@@ -93,6 +100,18 @@ class MakeViewsService
         $indexStub = str_replace('DummySection', $separateStyleAccordingToActions['index']['section'], $indexStub);
 
         return $indexStub;
+    }
+
+    public function findAndReplaceIndexViewPlaceholderLivewire($templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions, $withLivewire)
+    {
+        if($withLivewire)
+        {
+            $indexStub = File::get($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory).DIRECTORY_SEPARATOR.'index-livewire.stub');
+            $indexStub = str_replace('{{nameSingLower}}', $namingConvention['singular_low_name'], $indexStub);
+            $indexStub = str_replace('DummyExtends', $separateStyleAccordingToActions['index']['extends'], $indexStub);
+            $indexStub = str_replace('DummySection', $separateStyleAccordingToActions['index']['section'], $indexStub);
+            return $indexStub;
+        }
     }
 
     public function findAndReplaceCreateViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions)
@@ -155,11 +174,15 @@ class MakeViewsService
         return $editStub;
     }
 
-    public function createFileOrError($namingConvention, $contentFile, $fileName)
+    public function createFileOrError($namingConvention, $contentFile, $fileName, $withLivewire=false)
     {
-        if(!File::exists($this->pathsAndNamespacesService->getRealpathBaseCustomViews($namingConvention).DIRECTORY_SEPARATOR.$fileName))
+        $path = $withLivewire
+        ? $this->pathsAndNamespacesService->getRealpathBaseCustomLivewireViews($namingConvention).DIRECTORY_SEPARATOR.$fileName
+        : $this->pathsAndNamespacesService->getRealpathBaseCustomViews($namingConvention).DIRECTORY_SEPARATOR.$fileName;
+
+        if(!File::exists($path))
         {
-            File::put($this->pathsAndNamespacesService->getRealpathBaseCustomViews($namingConvention).DIRECTORY_SEPARATOR.$fileName, $contentFile);
+            File::put($path, $contentFile);
             $this->line("<info>Created View:</info> ".$fileName);
         }
         else

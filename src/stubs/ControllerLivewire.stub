@@ -1,0 +1,100 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespaceHttp\Controllers\Controller;
+
+use DummyRootNamespaceModels\DummyModel;
+use DummyRootNamespaceHttp\Requests\DummyModelRequest;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function index()
+    {
+        return view('DummyVariable.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
+        return view('DummyVariable.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  DummyModelRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(DummyModelRequest $request)
+    {
+        DummyCreateVariableSing$ = new DummyModel;
+DummyUpdate
+        DummyCreateVariableSing$->save();
+
+        return to_route('DummyVariable.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        return view('DummyVariable.show',['DummyVariableSing'=>DummyCreateVariableSing$]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        return view('DummyVariable.edit',['DummyVariableSing'=>DummyCreateVariableSing$]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  DummyModelRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(DummyModelRequest $request, $id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+DummyUpdate
+        DummyCreateVariableSing$->save();
+
+        return to_route('DummyVariable.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        DummyCreateVariableSing$ = DummyModel::findOrFail($id);
+        DummyCreateVariableSing$->delete();
+
+        return to_route('DummyVariable.index');
+    }
+}

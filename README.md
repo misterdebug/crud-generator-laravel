@@ -25,7 +25,7 @@ And since 1.9.2, a complete **REST API** !
 
 <sub>(Note: This step is not required if you don't need views.)</sub>
 
-3\. Publish the configuration file and the default-theme directory for views:
+3\. Publish the configuration file, stubs and the default-theme directory for views:
 
 ``` php artisan vendor:publish --provider="Mrdebug\Crudgen\CrudgenServiceProvider" ```
 
@@ -51,6 +51,8 @@ Let's do this 🙂
 ``` php artisan make:crud post "title:string, content:text" ``` (for our example)
 
 <sub>[Available options](https://github.com/misterdebug/crud-generator-laravel/wiki/Available-options-when-you-use-make:crud-command)</sub>
+
+<sub>[Generate CRUD with livewire datatable](https://github.com/misterdebug/crud-generator-laravel/wiki/Generate-CRUD-with-livewire-datatable)</sub>
 
 When you call this command, the controller, views and request are generated with your fields (in this case, title and content).
 ![image](https://user-images.githubusercontent.com/23297600/192172786-1703f7b8-f577-45c1-b0f9-296999827af2.png)

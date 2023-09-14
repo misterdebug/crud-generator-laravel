@@ -48,6 +48,7 @@ class RemoveCrud extends Command
         $this->deleteDirectory($namingConvention, 'views', $force);
         $this->deleteFile($namingConvention, 'request', $force);
         $this->deleteFile($namingConvention, 'model', $force);
+        $this->deleteFile($namingConvention, 'datatable', $force);
     }
 
     private function deleteFile($namingConvention, $fileType, $force)

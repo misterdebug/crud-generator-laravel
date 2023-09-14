@@ -1,0 +1,9 @@
+@extends('DummyExtends')
+
+@section('DummySection')
+
+    <div>
+        <livewire:{{nameSingLower}}-datatable />
+    </div>
+
+@stop

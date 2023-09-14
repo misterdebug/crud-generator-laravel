@@ -62,4 +62,15 @@ class MakeGlobalService
             'plural_low_variable_name'   => Str::plural(Str::camel(Str::lower($commentableParentName))),
         ];
     }
+
+    public function getColumnsNameFromInputConsole($columns)
+    {
+        $columnsName = [];
+        foreach($columns as $column)
+        {
+            $type = explode(':', trim($column));
+            $columnsName[]= $type[0];
+        }
+        return $columnsName;
+    }
 }

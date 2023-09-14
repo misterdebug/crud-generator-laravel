@@ -30,6 +30,7 @@ class RemoveCrudService
             'request' => $this->pathsAndNamespacesService->getRealpathBaseCustomRequest($namingConvention),
             'model' => $this->pathsAndNamespacesService->getRealpathBaseCustomModel($namingConvention),
             'views' => $this->pathsAndNamespacesService->getRealpathBaseCustomViews($namingConvention),
+            'datatable' => $this->pathsAndNamespacesService->getRealpathBaseCustomDatatable($namingConvention),
         ];
     }
 

@@ -16,7 +16,7 @@ class MakeViews extends Command
      *
      * @var string
      */
-    protected $signature = 'make:views {directory} {columns}';
+    protected $signature = 'make:views {directory} {columns} {--with-livewire} {searchableColumn?}';
 
     /**
      * The console command description.
@@ -50,6 +50,8 @@ class MakeViews extends Command
     {
         $templateViewsDirectory = config('crudgen.views_style_directory');
         $separateStyleAccordingToActions = config('crudgen.separate_style_according_to_actions');
+        $withLivewire = $this->option('with-livewire');
+        $columnInSearch = $this->argument('searchableColumn');
 
         if(!File::isDirectory($this->pathsAndNamespacesService->getCrudgenViewsStubCustom($templateViewsDirectory)))
         {
@@ -93,8 +95,14 @@ class MakeViews extends Command
 
         /* ************************** index view *************************** */
 
-        $contentIndex = $this->makeViewsService->findAndReplaceIndexViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions);
-        $this->makeViewsService->createFileOrError($namingConvention, $contentIndex, 'index.blade.php');
+        $contentIndex = $this->makeViewsService->findAndReplaceIndexViewPlaceholderColumns($columns, $templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions, $withLivewire, $columnInSearch);
+        $this->makeViewsService->createFileOrError($namingConvention, $contentIndex, $withLivewire ? $namingConvention['singular_low_name'].'-datatable.blade.php' : 'index.blade.php');
+
+        if($withLivewire)
+        {
+            $contentDatableIndexLivewire = $this->makeViewsService->findAndReplaceIndexViewPlaceholderLivewire($templateViewsDirectory, $namingConvention, $separateStyleAccordingToActions, $withLivewire);
+            $this->makeViewsService->createFileOrError($namingConvention, $contentDatableIndexLivewire, 'index.blade.php');
+        }
 
 
         /* ************************** create view *************************** */

@@ -27,9 +27,10 @@ class MakeControllerService
         $this->makeGlobalService = $makeGlobalService;
     }
 
-    public function replaceContentControllerStub($namingConvention, $laravelNamespace)
+    public function replaceContentControllerStub($namingConvention, $laravelNamespace, $withLivewire)
     {
-        $controllerStub = File::get($this->pathsAndNamespacesService->getControllerStubPath());
+        $controllerStubPath = $withLivewire ? $this->pathsAndNamespacesService->getControllerLivewireStubPath() : $this->pathsAndNamespacesService->getControllerStubPath();
+        $controllerStub = File::get($controllerStubPath);
         $controllerStub = str_replace('DummyClass', $namingConvention['plural_name'].'Controller', $controllerStub);
         $controllerStub = str_replace('DummyModel', $namingConvention['singular_name'], $controllerStub);
         $controllerStub = str_replace('DummyVariableSing', $namingConvention['singular_low_name'], $controllerStub);
@@ -73,9 +74,9 @@ class MakeControllerService
             $this->error('Controller '.$namingConvention['plural_name'].' already exists');
     }
 
-    public function makeCompleteControllerFile($namingConvention, $columns, $laravelNamespace)
+    public function makeCompleteControllerFile($namingConvention, $columns, $laravelNamespace, $withLivewire)
     {
-        $controllerStub = $this->replaceContentControllerStub($namingConvention, $laravelNamespace);
+        $controllerStub = $this->replaceContentControllerStub($namingConvention, $laravelNamespace, $withLivewire);
         $controllerStub = $this->findAndReplaceControllerPlaceholderColumns($columns, $controllerStub, $namingConvention);
 
         // if our controller doesn't exists we create it

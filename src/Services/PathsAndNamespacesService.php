@@ -11,14 +11,14 @@ class PathsAndNamespacesService
         return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'stubs';
     }
 
-    public function getDefaultNamespaceRequest($rootNamespace): string
+    public function getCrudgenViewsStub()
     {
-        return $rootNamespace.'Http\Requests';
+        return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views');
     }
 
-    public function getDefaultNamespaceResource($rootNamespace): string
+    public function getCrudgenViewsStubCustom($templateViewsDirectory)
     {
-        return $rootNamespace.'Http\Resources';
+        return $this->getCrudgenViewsStub().DIRECTORY_SEPARATOR.$templateViewsDirectory;
     }
 
     public function getRealpathBase($directory)
@@ -26,7 +26,105 @@ class PathsAndNamespacesService
         return realpath(base_path($directory));
     }
 
-    /** paths controller */
+    /** request */
+
+    public function getDefaultNamespaceRequest($rootNamespace): string
+    {
+        return $rootNamespace.'Http\Requests';
+    }
+
+    public function getRequestStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub';
+    }
+
+    public function getRealpathBaseRequest(): string
+    {
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests';
+    }
+
+    public function getRealpathBaseCustomRequest($namingConvention): string
+    {
+        return $this->getRealpathBaseRequest().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Request.php';
+    }
+
+    /** commentable */
+
+    public function getCommentableRequestStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'Request.stub';
+    }
+
+    public function getCommentableControllerStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'ControllerCommentable.stub';
+    }
+
+    public function getRealpathBaseCustomCommentableRequest($namingConvention): string
+    {
+        return $this->getRealpathBaseRequest().DIRECTORY_SEPARATOR.$namingConvention['model_name'].'Request.php';
+    }
+
+    public function getCommentableCommentBlockPath()
+    {
+        $stubPath = resource_path('crudgen/commentable/comment-block.stub');
+
+        return File::exists($stubPath)
+                ? $stubPath
+                : $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'comment-block.stub';
+    }
+
+    /** api */
+
+    public function getDefaultNamespaceApiController($rootNamespace): string
+    {
+        return $rootNamespace.'Http\Controllers\API';
+    }
+
+    //api request
+    public function getApiRequestStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'request.stub';
+    }
+
+    //api controller
+    public function getRealpathBaseApiController(): string
+    {
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.'API';
+    }
+
+    public function getRealpathBaseCustomApiController($namingConvention): string
+    {
+        return $this->getRealpathBaseApiController().DIRECTORY_SEPARATOR.$namingConvention['plural_name'].'Controller.php';
+    }
+
+    public function getApiControllerStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'Controller-api.stub';
+    }
+
+    //api resource
+    public function getResourceStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'resource.stub';
+    }
+
+    public function getDefaultNamespaceResource($rootNamespace): string
+    {
+        return $rootNamespace.'Http\Resources';
+    }
+
+    public function getRealpathBaseResource(): string
+    {
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Resources';
+    }
+
+    public function getRealpathBaseCustomResource($namingConvention): string
+    {
+        return $this->getRealpathBaseResource().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Resource.php';
+    }
+
+    /** controller */
 
     public function getDefaultNamespaceController($rootNamespace): string
     {
@@ -53,83 +151,7 @@ class PathsAndNamespacesService
         return $this->getStubPath().DIRECTORY_SEPARATOR.'Controller.stub';
     }
 
-    /** paths api controller */
-
-    public function getDefaultNamespaceApiController($rootNamespace): string
-    {
-        return $rootNamespace.'Http\Controllers\API';
-    }
-
-    public function getRealpathBaseApiController(): string
-    {
-        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers').DIRECTORY_SEPARATOR.'API';
-    }
-
-    public function getRealpathBaseCustomApiController($namingConvention): string
-    {
-        return $this->getRealpathBaseApiController().DIRECTORY_SEPARATOR.$namingConvention['plural_name'].'Controller.php';
-    }
-
-    public function getApiControllerStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'Controller-api.stub';
-    }
-
-    public function getCommentableControllerStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'ControllerCommentable.stub';
-    }
-
-    /** paths request */
-
-    public function getRequestStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'Request.stub';
-    }
-
-    public function getApiRequestStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'request.stub';
-    }
-
-    public function getCommentableRequestStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'Request.stub';
-    }
-
-    public function getRealpathBaseRequest(): string
-    {
-        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Requests';
-    }
-
-    public function getRealpathBaseCustomRequest($namingConvention): string
-    {
-        return $this->getRealpathBaseRequest().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Request.php';
-    }
-
-    public function getRealpathBaseCustomCommentableRequest($namingConvention): string
-    {
-        return $this->getRealpathBaseRequest().DIRECTORY_SEPARATOR.$namingConvention['model_name'].'Request.php';
-    }
-
-    /** paths resource */
-
-    public function getResourceStubPath(): string
-    {
-        return $this->getStubPath().DIRECTORY_SEPARATOR.'api'.DIRECTORY_SEPARATOR.'resource.stub';
-    }
-
-    public function getRealpathBaseResource(): string
-    {
-        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Http').DIRECTORY_SEPARATOR.'Resources';
-    }
-
-    public function getRealpathBaseCustomResource($namingConvention): string
-    {
-        return $this->getRealpathBaseResource().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Resource.php';
-    }
-
-    /** paths models */
+    /** models */
 
     public function getDefaultNamespaceModel($rootNamespace): string
     {
@@ -158,7 +180,7 @@ class PathsAndNamespacesService
             : $this->getRealpathBaseModel().DIRECTORY_SEPARATOR.$namingConvention['model_name'].'.php';
     }
 
-    /** paths migrations */
+    /** migrations */
 
     public function getMigrationStubPath()
     {
@@ -171,6 +193,7 @@ class PathsAndNamespacesService
     }
 
     /** paths views */
+
     public function getRealpathBaseViews()
     {
         return $this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views');
@@ -181,14 +204,28 @@ class PathsAndNamespacesService
         return $this->getRealpathBaseViews().DIRECTORY_SEPARATOR.$namingConvention['plural_low_name'];
     }
 
-    public function getCommentableCommentBlockPath()
+    // views livewire
+    public function getRealpathBaseLivewireViews()
     {
-        $stubPath = resource_path('crudgen/commentable/comment-block.stub');
-
-        return File::exists($stubPath) ? $stubPath : $this->getStubPath().DIRECTORY_SEPARATOR.'commentable'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'comment-block.stub';
+        return $this->getRealpathBase('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'livewire');
     }
 
-    /** paths service */
+    public function getRealpathBaseCustomLivewireViews($namingConvention)
+    {
+        return $this->getRealpathBaseLivewireViews().DIRECTORY_SEPARATOR.$namingConvention['plural_low_name'];
+    }
+
+    public function getControllerLivewireStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'ControllerLivewire.stub';
+    }
+
+    /** service */
+
+    public function getDefaultNamespaceService($rootNamespace): string
+    {
+        return config('crudgen.paths.service.namespace') ?? $rootNamespace.'Services';
+    }
 
     public function getServiceStubPath(): string
     {
@@ -205,19 +242,26 @@ class PathsAndNamespacesService
         return $this->getRealpathBaseService().DIRECTORY_SEPARATOR.$namingConvention['service_name'].'.php';
     }
 
-    public function getDefaultNamespaceService($rootNamespace): string
+    /** datatable */
+
+    public function getDefaultNamespaceDatatable($rootNamespace): string
     {
-        return config('crudgen.paths.service.namespace') ?? $rootNamespace.'Services';
+        return $rootNamespace.'Livewire';
     }
 
-    public function getCrudgenViewsStub()
+    public function getRealpathBaseDatatable()
     {
-        return resource_path('crudgen'.DIRECTORY_SEPARATOR.'views');
+        return $this->getRealpathBase('app'.DIRECTORY_SEPARATOR.'Livewire');
+
     }
 
-    public function getCrudgenViewsStubCustom($templateViewsDirectory)
+    public function getRealpathBaseCustomDatatable($namingConvention): string
     {
-        return $this->getCrudgenViewsStub().DIRECTORY_SEPARATOR.$templateViewsDirectory;
+        return $this->getRealpathBaseDatatable().DIRECTORY_SEPARATOR.$namingConvention['singular_name'].'Datatable.php';
     }
 
+    public function getDatatableStubPath(): string
+    {
+        return $this->getStubPath().DIRECTORY_SEPARATOR.'Livewire'.DIRECTORY_SEPARATOR.'Datatable.stub';
+    }
 }
