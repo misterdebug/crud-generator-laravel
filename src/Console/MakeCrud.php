@@ -21,7 +21,7 @@ class MakeCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {crud_name} {columns} {{--with-livewire}}';
+    protected $signature = 'make:crud {crud_name} {columns} {--with-livewire}';
 
     /**
      * The console command description.
