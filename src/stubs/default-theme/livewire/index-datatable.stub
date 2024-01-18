@@ -26,7 +26,7 @@
                             <a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Edit</a>
                             {!! html()->form('DELETE', route('DummyVariable.destroy', DummyCreateVariableSing$->id))->open() !!}
-                                {!! html()->submit('Delete') !!}
+                                {!! html()->submit('Delete')->class('btn btn-danger') !!}
                             {!! html()->form()->close() !!}
                         </div>
                     </td>
