@@ -160,8 +160,8 @@ class MakeViewsService
 
             // our placeholders
             $formEdit .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\') }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null }}'."\n";
             $formEdit .=str_repeat("\t", 2).'</div>'."\n";
         }
 
@@ -195,7 +195,10 @@ class MakeViewsService
         [
             'string'  => 'text',
             'text'    => 'textarea',
-            'integer' => 'text'
+            'integer' => 'number',
+            'float' => 'number',
+            'double' => 'number',
+            'bool' => 'checkbox'
         ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');
     }
