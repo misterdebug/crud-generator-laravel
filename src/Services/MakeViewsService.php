@@ -123,11 +123,16 @@ class MakeViewsService
             $sql_type  = (count($type)==2) ? $type[1] : 'string';
             $column    = $type[0];
             $typeHtml = $this->getHtmlType($sql_type);
+            $number_types = ['decimal', 'float', 'double'];
 
             // our placeholders
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\')->class(\'form-label\') }}'."\n";
+
+            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null)->class(\'form-control\') }}';
+            if(in_array($sql_type, $number_types))
+                $formCreate .="->step(.000001)";
+            $formCreate .="\n";
             $formCreate .=str_repeat("\t", 2).'</div>'."\n";
         }
 
@@ -198,6 +203,7 @@ class MakeViewsService
             'integer' => 'number',
             'float' => 'number',
             'double' => 'number',
+            'decimal' => 'number',
             'bool' => 'checkbox'
         ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');

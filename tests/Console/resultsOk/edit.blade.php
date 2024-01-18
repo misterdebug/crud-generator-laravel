@@ -10,7 +10,7 @@
 		</div>
 	@endif
 
-	{{ html()->form()->modelform($post, 'PUT', array('route' => array('posts.update', $post->id))) }}
+	{{ html()->form()->modelform($post, 'PUT', route('posts.update', $post->id)) }}
 
 		<div class="mb-3">
 			{{ html()->label('Title', 'title') }}

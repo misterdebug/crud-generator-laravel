@@ -1,4 +1,4 @@
-{!! html()->form()->open('{{route_comment}}.store'.{parent_variable}}->id) !!}
+{!! html()->form(route('{{route_comment}}.store', {parent_variable}}->id))->open() !!}
 	<div class="mb-3">
 		{{ html()->label('Comment', 'comment') }}
 		{{ html()->textarea()('comment') }}
@@ -10,7 +10,7 @@
 	@foreach({{parent_variable}}->{{name_relationship}} as $comment)
 		<div class="card mb-3">
 			<div class="position-absolute" style="right: 0">
-			        {!! html()->form()->open('method' => 'DELETE', '{{route_comment}}.destroy'.{{comment_variable}}->id]) !!}
+			        {!! html()->form('DELETE', route('{{route_comment}}.destroy', {{comment_variable}}->id))->open() !!}
                         {!! html()->submit('❌') !!}
                     {!! html()->form()->close() !!}
 			</div>

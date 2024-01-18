@@ -10,7 +10,7 @@
 		</div>
 	@endif
 
-	{!! html()->form()->open('posts.store') !!}
+	{!! html()->form('POST', route('posts.store'))->open() !!}
 
 		<div class="mb-3">
 			{{ html()->label('Title', 'title') }}
