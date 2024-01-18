@@ -1,7 +1,7 @@
 {!! html()->form(route('{{route_comment}}.store', {parent_variable}}->id))->open() !!}
 	<div class="mb-3">
-		{{ html()->label('Comment', 'comment') }}
-		{{ html()->textarea()('comment') }}
+		{{ html()->label('Comment', 'comment')->class('form-label)' }}
+		{{ html()->textarea()('comment')->class('form-control) }}
 	</div>
 	{{ html()->submit('Create')->class('btn btn-primary') }}
 {{ html()->form()->close() }}
