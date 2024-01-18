@@ -10,7 +10,7 @@
 		</div>
 	@endif
 
-	{{ html()->form('PUT', 'DummyVariable.update'.DummyCreateVariableSing$->id )->open() }}
+	{{ html()->form('PUT', route(['DummyVariable.update', DummyCreateVariableSing$->id]) )->open() }}
         DummyFormCreate
 		{{ html()->submit('Edit') }}
 	{{ html()->form()->close() }}
