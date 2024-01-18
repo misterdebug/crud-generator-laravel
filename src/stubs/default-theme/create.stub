@@ -10,10 +10,10 @@
 		</div>
 	@endif
 
-	{{ html()->form('PUT', 'DummyVariable.store' )->open() }}
+	{{ html()->form('POST', route('DummyVariable.store') )->open() }}
         DummyFormCreate
-		{{ html()->form()->submit('Create') }}
-	{{ html()->form->close() }}
+		{{ html()->submit('Create')->class('btn btn-primary') }}
+	{{ html()->form()->close() }}
 
 
 @stop

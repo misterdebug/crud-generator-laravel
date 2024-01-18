@@ -29,7 +29,7 @@
                         <div class="d-flex gap-2">
                             <a href="{{ route('posts.show', [$post->id]) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('posts.edit', [$post->id]) }}" class="btn btn-primary">Edit</a>
-                            {!! html()->form()->open('DELETE',['posts.destroy', $post->id]) !!}
+                            {!! html()->form('DELETE',route('posts.destroy', $post->id))->open() !!}
                                 {!! html()->form()->submit('Delete') !!}
                             {!! html()->form()->close() !!}
                         </div>

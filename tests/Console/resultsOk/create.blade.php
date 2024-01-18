@@ -10,19 +10,19 @@
 		</div>
 	@endif
 
-	{!! html()->form()->open('posts.store') !!}
+	{!! html()->form('POST', route('posts.store'))->open() !!}
 
 		<div class="mb-3">
-			{{ html()->form()->label('title', 'Title') }}
-			{{ html()->form()->text('title', null) }}
+			{{ html()->label('Title', 'title') }}
+			{{ html()->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ html()->form()->label('url', 'Url') }}
-			{{ html()->form()->text('url', null) }}
+			{{ html()->label('Url', 'url') }}
+			{{ html()->text('url', null) }}
 		</div>
 
 
-		{{ html()->form()->submit('Create') }}
+		{{ html()->submit('Create') }}
 
 	{{ html()->form()->close() }}
 

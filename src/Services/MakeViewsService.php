@@ -78,7 +78,7 @@ class MakeViewsService
             $column    = $type[0];
 
             // our placeholders
-            $thIndex    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
+            $thIndex    .=str_repeat("\t", 4)."<th scope='col'>".trim($column)."</th>\n";
 
             if($column == $columnInSearch)
                 $indexView  .=str_repeat("\t", 5).'<td>{!! $this->search ? $this->highlightTitle(DummyCreateVariableSing$->'.$columnInSearch.') : DummyCreateVariableSing$->'.$columnInSearch.' !!}</td>'."\n";
@@ -123,11 +123,16 @@ class MakeViewsService
             $sql_type  = (count($type)==2) ? $type[1] : 'string';
             $column    = $type[0];
             $typeHtml = $this->getHtmlType($sql_type);
+            $number_types = ['decimal', 'float', 'double'];
 
             // our placeholders
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html()->form()->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html()->form()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\')->class(\'form-label\') }}'."\n";
+
+            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(name: \''.trim($column).'\'';
+            if(in_array($sql_type, $number_types))
+                $formCreate .=", step: .000001";
+            $formCreate .=")->class('form-control') }}\n";
             $formCreate .=str_repeat("\t", 2).'</div>'."\n";
         }
 
@@ -160,8 +165,8 @@ class MakeViewsService
 
             // our placeholders
             $formEdit .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html()->form()->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html()->form()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\') }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null }}'."\n";
             $formEdit .=str_repeat("\t", 2).'</div>'."\n";
         }
 
@@ -195,7 +200,11 @@ class MakeViewsService
         [
             'string'  => 'text',
             'text'    => 'textarea',
-            'integer' => 'text'
+            'integer' => 'number',
+            'float' => 'number',
+            'double' => 'number',
+            'decimal' => 'number',
+            'bool' => 'checkbox'
         ];
         return (isset($conversion[$sql_type]) ? $conversion[$sql_type] : 'string');
     }

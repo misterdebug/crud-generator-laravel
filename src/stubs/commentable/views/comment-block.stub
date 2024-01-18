@@ -1,17 +1,17 @@
-{!! html()->form()->open('{{route_comment}}.store'.{parent_variable}}->id) !!}
+{!! html()->form(route('{{route_comment}}.store', {parent_variable}}->id))->open() !!}
 	<div class="mb-3">
-		{{ html()->form()->label('comment', 'Comment') }}
-		{{ html()->form()->textarea()('comment') }}
+		{{ html()->label('Comment', 'comment') }}
+		{{ html()->textarea()('comment') }}
 	</div>
-	{{ html()->form()->submit('Create') }}
+	{{ html()->submit('Create')->class('btn btn-primary') }}
 {{ html()->form()->close() }}
 
 <div class="mt-3">
 	@foreach({{parent_variable}}->{{name_relationship}} as $comment)
 		<div class="card mb-3">
 			<div class="position-absolute" style="right: 0">
-			        {!! html()->form()->open('method' => 'DELETE', '{{route_comment}}.destroy'.{{comment_variable}}->id]) !!}
-                        {!! html()->form()->submit('❌') !!}
+			        {!! html()->form('DELETE', route('{{route_comment}}.destroy', {{comment_variable}}->id))->open() !!}
+                        {!! html()->submit('❌')->class('btn btn-sm') !!}
                     {!! html()->form()->close() !!}
 			</div>
 			<div class="card-body">
