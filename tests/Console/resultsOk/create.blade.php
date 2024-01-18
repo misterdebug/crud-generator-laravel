@@ -13,11 +13,11 @@
 	{!! html()->form()->open('posts.store') !!}
 
 		<div class="mb-3">
-			{{ html()->label('title', 'Title') }}
+			{{ html()->label('Title', 'title') }}
 			{{ html()->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ html()->label('url', 'Url') }}
+			{{ html()->label('Url', 'url') }}
 			{{ html()->text('url', null) }}
 		</div>
 

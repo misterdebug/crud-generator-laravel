@@ -1,6 +1,6 @@
 {!! html()->form()->open('{{route_comment}}.store'.{parent_variable}}->id) !!}
 	<div class="mb-3">
-		{{ html()->label('comment', 'Comment') }}
+		{{ html()->label('Comment', 'comment') }}
 		{{ html()->textarea()('comment') }}
 	</div>
 	{{ html()->submit('Create') }}
