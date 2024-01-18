@@ -10,18 +10,18 @@
 		</div>
 	@endif
 
-	{{ Form::model($post, array('route' => array('posts.update', $post->id), 'method' => 'PUT')) }}
+	{{ html()->form()->modelform($post, 'PUT', array('route' => array('posts.update', $post->id))) }}
 
 		<div class="mb-3">
-			{{ Form::label('title', 'Title', ['class'=>'form-label']) }}
-			{{ Form::text('title', null, array('class' => 'form-control')) }}
+			{{ html()->form()->label('title', 'Title') }}
+			{{ html()->form()->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ Form::label('url', 'Url', ['class'=>'form-label']) }}
-			{{ Form::text('url', null, array('class' => 'form-control')) }}
+			{{ html()->form()->label('url', 'Url') }}
+			{{ html()->form()->text('url', null) }}
 		</div>
 
-		{{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
+		{{ html()->form()->submit('Edit') }}
 
-	{{ Form::close() }}
+	{{ html()->form()->close() }}
 @stop

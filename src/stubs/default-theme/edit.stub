@@ -10,10 +10,8 @@
 		</div>
 	@endif
 
-	{{ Form::model(DummyCreateVariableSing$, array('route' => array('DummyVariable.update', DummyCreateVariableSing$->id), 'method' => 'PUT')) }}
-
-DummyFormCreate
-		{{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
-
-	{{ Form::close() }}
+	{{ html()->form('PUT', 'DummyVariable.update'.DummyCreateVariableSing$->id )->open() }}
+        DummyFormCreate
+		{{ html()->form()->submit('Edit') }}
+	{{ html()->form->close() }}
 @stop
