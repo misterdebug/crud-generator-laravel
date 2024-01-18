@@ -78,7 +78,7 @@ class MakeViewsService
             $column    = $type[0];
 
             // our placeholders
-            $thIndex    .=str_repeat("\t", 4)."<th>".trim($column)."</th>\n";
+            $thIndex    .=str_repeat("\t", 4)."<th scope='col'>".trim($column)."</th>\n";
 
             if($column == $columnInSearch)
                 $indexView  .=str_repeat("\t", 5).'<td>{!! $this->search ? $this->highlightTitle(DummyCreateVariableSing$->'.$columnInSearch.') : DummyCreateVariableSing$->'.$columnInSearch.' !!}</td>'."\n";
@@ -129,10 +129,10 @@ class MakeViewsService
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
             $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\')->class(\'form-label\') }}'."\n";
 
-            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null)->class(\'form-control\') }}';
+            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null)->class(\'form-control\')';
             if(in_array($sql_type, $number_types))
                 $formCreate .="->step(.000001)";
-            $formCreate .="\n";
+            $formCreate .=" }}\n";
             $formCreate .=str_repeat("\t", 2).'</div>'."\n";
         }
 

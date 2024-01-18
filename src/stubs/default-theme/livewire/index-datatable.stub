@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th>id</th>
-DummyHeaderTable
+                DummyHeaderTable
                 <th>Action</th>
             </tr>
         </thead>
@@ -20,7 +20,7 @@ DummyHeaderTable
             @foreach(DummyCreateVariable$ as DummyCreateVariableSing$)
                 <tr>
                     <td>{{ DummyCreateVariableSing$->id }}</td>
-DummyIndexTable
+                    DummyIndexTable
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
