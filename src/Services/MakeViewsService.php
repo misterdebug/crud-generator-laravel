@@ -126,8 +126,8 @@ class MakeViewsService
 
             // our placeholders
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formCreate .=str_repeat("\t", 3).'{{ html->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
+            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
             $formCreate .=str_repeat("\t", 2).'</div>'."\n";
         }
 
@@ -160,8 +160,8 @@ class MakeViewsService
 
             // our placeholders
             $formEdit .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
-            $formEdit .=str_repeat("\t", 3).'{{ html->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->label(\''.trim($column).'\', \''.ucfirst(trim($column)).'\', [\'class\'=>\'form-label\']) }}'."\n";
+            $formEdit .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\''.trim($column).'\', null, array(\'class\' => \'form-control\')) }}'."\n";
             $formEdit .=str_repeat("\t", 2).'</div>'."\n";
         }
 

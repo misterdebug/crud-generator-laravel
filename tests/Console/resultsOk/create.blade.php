@@ -13,16 +13,16 @@
 	{!! html()->form()->open('posts.store') !!}
 
 		<div class="mb-3">
-			{{ html->label('title', 'Title') }}
-			{{ html->text('title', null) }}
+			{{ html()->label('title', 'Title') }}
+			{{ html()->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ html->label('url', 'Url') }}
-			{{ html->text('url', null) }}
+			{{ html()->label('url', 'Url') }}
+			{{ html()->text('url', null) }}
 		</div>
 
 
-		{{ html->submit('Create') }}
+		{{ html()->submit('Create') }}
 
 	{{ html()->form()->close() }}
 

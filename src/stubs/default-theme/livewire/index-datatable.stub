@@ -26,7 +26,7 @@ DummyIndexTable
                             <a href="{{ route('DummyVariable.show', [DummyCreateVariableSing$->id]) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('DummyVariable.edit', [DummyCreateVariableSing$->id]) }}" class="btn btn-primary">Edit</a>
                             {!! html()->form()->open('DELETE', 'DummyVariable.destroy'.DummyCreateVariableSing$->id) !!}
-                                {!! html->submit('Delete') !!}
+                                {!! html()->submit('Delete') !!}
                             {!! html()->form()->close() !!}
                         </div>
                     </td>

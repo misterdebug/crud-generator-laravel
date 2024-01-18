@@ -1,9 +1,9 @@
 {!! html()->form()->open('{{route_comment}}.store'.{parent_variable}}->id) !!}
 	<div class="mb-3">
-		{{ html->label('comment', 'Comment') }}
-		{{ html->textarea()('comment') }}
+		{{ html()->label('comment', 'Comment') }}
+		{{ html()->textarea()('comment') }}
 	</div>
-	{{ html->submit('Create') }}
+	{{ html()->submit('Create') }}
 {{ html()->form()->close() }}
 
 <div class="mt-3">
@@ -11,7 +11,7 @@
 		<div class="card mb-3">
 			<div class="position-absolute" style="right: 0">
 			        {!! html()->form()->open('method' => 'DELETE', '{{route_comment}}.destroy'.{{comment_variable}}->id]) !!}
-                        {!! html->submit('❌') !!}
+                        {!! html()->submit('❌') !!}
                     {!! html()->form()->close() !!}
 			</div>
 			<div class="card-body">
