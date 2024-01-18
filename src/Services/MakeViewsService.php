@@ -129,7 +129,7 @@ class MakeViewsService
             $formCreate .=str_repeat("\t", 2).'<div class="mb-3">'."\n";
             $formCreate .=str_repeat("\t", 3).'{{ html()->label(\''.ucfirst(trim($column)).'\', \''.trim($column).'\')->class(\'form-label\') }}'."\n";
 
-            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(\'name: '.trim($column).'\'';
+            $formCreate .=str_repeat("\t", 3).'{{ html()->'.$typeHtml.'(name: \''.trim($column).'\'';
             if(in_array($sql_type, $number_types))
                 $formCreate .=", step: .000001";
             $formCreate .=")->class('form-control') }}\n";
