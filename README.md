@@ -21,9 +21,9 @@ If you find this project useful, please consider giving it a star⭐. It helps m
 
 ``` composer require mrdebug/crudgen --dev ```
 
-2\. If you don't use Laravel Collective Form package in your project, install it:
+2\. If you don't use Spatie's HTML package in your project, install it:
 
-``` composer require laravelcollective/html ```
+``` composer require spatie/laravel-html ```
 
 <sub>(Note: This step is not required if you don't need views.)</sub>
 
