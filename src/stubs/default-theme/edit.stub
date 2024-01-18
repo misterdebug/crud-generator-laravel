@@ -12,6 +12,6 @@
 
 	{{ html()->form('PUT', 'DummyVariable.update'.DummyCreateVariableSing$->id )->open() }}
         DummyFormCreate
-		{{ html()->form()->submit('Edit') }}
+		{{ html->submit('Edit') }}
 	{{ html()->form->close() }}
 @stop

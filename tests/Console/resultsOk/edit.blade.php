@@ -13,15 +13,15 @@
 	{{ html()->form()->modelform($post, 'PUT', array('route' => array('posts.update', $post->id))) }}
 
 		<div class="mb-3">
-			{{ html()->form()->label('title', 'Title') }}
-			{{ html()->form()->text('title', null) }}
+			{{ html->label('title', 'Title') }}
+			{{ html->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ html()->form()->label('url', 'Url') }}
-			{{ html()->form()->text('url', null) }}
+			{{ html->label('url', 'Url') }}
+			{{ html->text('url', null) }}
 		</div>
 
-		{{ html()->form()->submit('Edit') }}
+		{{ html->submit('Edit') }}
 
 	{{ html()->form()->close() }}
 @stop

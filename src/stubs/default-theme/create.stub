@@ -12,7 +12,7 @@
 
 	{{ html()->form('PUT', 'DummyVariable.store' )->open() }}
         DummyFormCreate
-		{{ html()->form()->submit('Create') }}
+		{{ html->submit('Create') }}
 	{{ html()->form->close() }}
 
 
