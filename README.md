@@ -1,4 +1,4 @@
-# Crud Generator Laravel 9 and 10 (your time saver)
+# Crud Generator Laravel 12 (your time saver)
 
 Crud Generator Laravel is a package that you can integrate in your Laravel to create a REAL CRUD. It includes :
 
@@ -152,3 +152,9 @@ This package is licensed under the [license MIT](http://opensource.org/licenses/
 Explore my other projects on GitHub:
 
 - **[LaraFileEncrypter](https://github.com/misterdebug/laravel-file-encrypter)**: Secure your files in Laravel with AES-256 encryption, without persistent key storage hassle.
+
+tests
+vendor/bin/phpunit vendor/mrdebug/crudgen/tests/
+php artisan make:crud post "title, content:text"
+php artisan rm:crud post --force
+php artisan test
