@@ -152,9 +152,3 @@ This package is licensed under the [license MIT](http://opensource.org/licenses/
 Explore my other projects on GitHub:
 
 - **[LaraFileEncrypter](https://github.com/misterdebug/laravel-file-encrypter)**: Secure your files in Laravel with AES-256 encryption, without persistent key storage hassle.
-
-tests
-vendor/bin/phpunit vendor/mrdebug/crudgen/tests/
-php artisan make:crud post "title, content:text"
-php artisan rm:crud post --force
-php artisan test
