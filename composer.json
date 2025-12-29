@@ -25,7 +25,8 @@
     ],
     "require":
     	{
-    		"php": ">=8.0.0"
+    		"php": ">=8.0.0",
+        "spatie/laravel-html": "^3.4"
     	},
     "autoload":
     {

@@ -10,21 +10,21 @@
 		</div>
 	@endif
 
-	{!! Form::open(['route' => 'posts.store']) !!}
+	{!! html()->form('POST', route('posts.store'))->open() !!}
 
 		<div class="mb-3">
-			{{ Form::label('title', 'Title', ['class'=>'form-label']) }}
-			{{ Form::text('title', null, array('class' => 'form-control')) }}
+			{{ html()->label('Title', 'title') }}
+			{{ html()->text('title', null) }}
 		</div>
 		<div class="mb-3">
-			{{ Form::label('url', 'Url', ['class'=>'form-label']) }}
-			{{ Form::text('url', null, array('class' => 'form-control')) }}
+			{{ html()->label('Url', 'url') }}
+			{{ html()->text('url', null) }}
 		</div>
 
 
-		{{ Form::submit('Create', array('class' => 'btn btn-primary')) }}
+		{{ html()->submit('Create') }}
 
-	{{ Form::close() }}
+	{{ html()->form()->close() }}
 
 
 @stop

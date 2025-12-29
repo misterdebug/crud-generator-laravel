@@ -10,13 +10,10 @@
 		</div>
 	@endif
 
-	{!! Form::open(['route' => 'DummyVariable.store']) !!}
-
-DummyFormCreate
-
-		{{ Form::submit('Create', array('class' => 'btn btn-primary')) }}
-
-	{{ Form::close() }}
+	{{ html()->form('POST', route('DummyVariable.store') )->open() }}
+        DummyFormCreate
+		{{ html()->submit('Create')->class('btn btn-primary') }}
+	{{ html()->form()->close() }}
 
 
 @stop
